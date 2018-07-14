@@ -121,6 +121,7 @@ import info.nightscout.utils.OKDialog;
 import info.nightscout.utils.Profiler;
 import info.nightscout.utils.SP;
 import info.nightscout.utils.SingleClickButton;
+import info.nightscout.utils.T;
 import info.nightscout.utils.ToastUtils;
 
 import static info.nightscout.utils.DateUtil.now;
@@ -855,7 +856,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
                             if (wizard.superBolus) {
                                 final LoopPlugin loopPlugin = LoopPlugin.getPlugin();
                                 if (loopPlugin.isEnabled(PluginType.LOOP)) {
-                                    loopPlugin.superBolusTo(System.currentTimeMillis() + 2 * 60L * 60 * 1000);
+                                    loopPlugin.superBolusTo(System.currentTimeMillis() + T.hours(2).msecs());
                                     MainApp.bus().post(new EventRefreshOverview("WizardDialog"));
                                 }
                                 ConfigBuilderPlugin.getCommandQueue().tempBasalPercent(0, 120, true, profile, new Callback() {
@@ -1215,15 +1216,12 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
             } else {
                 basalText = DecimalFormatter.to2Decimal(profile.getBasal()) + "U/h";
             }
-            baseBasalView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String fullText = MainApp.gs(R.string.pump_basebasalrate_label) + ": " + DecimalFormatter.to2Decimal(profile.getBasal()) + "U/h\n";
-                    if (activeTemp != null) {
-                        fullText += MainApp.gs(R.string.pump_tempbasal_label) + ": " + activeTemp.toStringFull();
-                    }
-                    OKDialog.show(getActivity(), MainApp.gs(R.string.basal), fullText, null);
+            baseBasalView.setOnClickListener(v -> {
+                String fullText = MainApp.gs(R.string.pump_basebasalrate_label) + ": " + DecimalFormatter.to2Decimal(profile.getBasal()) + "U/h\n";
+                if (activeTemp != null) {
+                    fullText += MainApp.gs(R.string.pump_tempbasal_label) + ": " + activeTemp.toStringFull();
                 }
+                OKDialog.show(getActivity(), MainApp.gs(R.string.basal), fullText, null);
             });
 
         } else {
@@ -1252,22 +1250,17 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
                 if (extendedBolus != null && !pump.isFakingTempsByExtendedBoluses()) {
                     extendedBolusText = DecimalFormatter.to2Decimal(extendedBolus.absoluteRate()) + "U/h";
                 }
-                extendedBolusView.setText(extendedBolusText);
-                extendedBolusView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        OKDialog.show(getActivity(), MainApp.gs(R.string.extendedbolus), extendedBolus.toString(), null);
-                    }
-                });
-
             } else {
                 if (extendedBolus != null && !pump.isFakingTempsByExtendedBoluses()) {
                     extendedBolusText = extendedBolus.toString();
                 }
-                extendedBolusView.setText(extendedBolusText);
+            }
+            extendedBolusView.setText(extendedBolusText);
+            if (Config.NSCLIENT || Config.G5UPLOADER) {
+                extendedBolusView.setOnClickListener(v -> OKDialog.show(getActivity(), MainApp.gs(R.string.extendedbolus), extendedBolus.toString(), null));
             }
             if (extendedBolusText.equals(""))
-                extendedBolusView.setVisibility(shorttextmode ? View.INVISIBLE : View.GONE);
+                extendedBolusView.setVisibility(Config.NSCLIENT || Config.G5UPLOADER ? View.INVISIBLE : View.GONE);
             else
                 extendedBolusView.setVisibility(View.VISIBLE);
         }
@@ -1498,12 +1491,12 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
                 predHours = Math.max(0, predHours);
                 hoursToFetch = rangeToDisplay - predHours;
                 toTime = calendar.getTimeInMillis() + 100000; // little bit more to avoid wrong rounding - Graphview specific
-                fromTime = toTime - hoursToFetch * 60 * 60 * 1000L;
-                endTime = toTime + predHours * 60 * 60 * 1000L;
+                fromTime = toTime - T.hours(hoursToFetch).msecs();
+                endTime = toTime + T.hours(predHours).msecs();
             } else {
                 hoursToFetch = rangeToDisplay;
                 toTime = calendar.getTimeInMillis() + 100000; // little bit more to avoid wrong rounding - Graphview specific
-                fromTime = toTime - hoursToFetch * 60 * 60 * 1000L;
+                fromTime = toTime - T.hours(hoursToFetch).msecs();
                 endTime = toTime;
             }
 
