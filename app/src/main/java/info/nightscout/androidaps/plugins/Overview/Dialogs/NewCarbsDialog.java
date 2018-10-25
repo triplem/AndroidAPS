@@ -157,7 +157,7 @@ public class NewCarbsDialog extends DialogFragment implements OnClickListener, C
         notesEdit = view.findViewById(R.id.newcarbs_notes);
 
         BgReading bgReading = DatabaseHelper.actualBg();
-        if (bgReading != null && bgReading.value < 72) {
+        if (bgReading != null && bgReading.value < Constants.LOW_BS_THRESHOLD) {
             startHypoTTCheckbox.setChecked(true);
             // see #onCheckedChanged why listeners are registered like this
             startHypoTTCheckbox.setOnClickListener(this);
