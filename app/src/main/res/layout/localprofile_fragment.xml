@@ -158,7 +158,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
-
                 <Button
                     android:id="@+id/localprofile_reset"
                     style="?android:attr/buttonStyle"
