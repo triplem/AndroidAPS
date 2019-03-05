@@ -80,6 +80,9 @@ public class MaintenanceFragment extends Fragment {
             MaintenancePlugin.getPlugin().copyActiveNSProfileToLocalProfile();
         });
 
+        view.findViewById(R.id.profile_upload).setOnClickListener(view1 -> {
+            MaintenancePlugin.getPlugin().uploadToNS();
+        });
 
         return view;
     }

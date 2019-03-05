@@ -609,7 +609,7 @@ public class NSUpload {
             } catch (JSONException e) {
                 log.error("Unhandled exception", e);
             }
-
+            log.debug("Uploaded profile should be:"+data.toString());
             bundle.putString("action", "dbAdd");
             bundle.putString("collection", "profile");
             bundle.putString("data", data.toString());

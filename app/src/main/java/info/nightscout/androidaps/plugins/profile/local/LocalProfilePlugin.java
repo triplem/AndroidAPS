@@ -20,7 +20,7 @@ import info.nightscout.androidaps.interfaces.PluginDescription;
 import info.nightscout.androidaps.interfaces.PluginType;
 import info.nightscout.androidaps.interfaces.ProfileInterface;
 import info.nightscout.androidaps.logging.L;
-import info.nightscout.androidaps.plugins.NSClientInternal.NSUpload;
+import info.nightscout.androidaps.plugins.general.nsclient.NSUpload;
 import info.nightscout.androidaps.utils.DecimalFormatter;
 import info.nightscout.androidaps.utils.SP;
 
@@ -231,23 +231,6 @@ public class LocalProfilePlugin extends PluginBase implements ProfileInterface {
     @Override
     public String getProfileName() {
         return DecimalFormatter.to2Decimal(convertedProfile.getDefaultProfile().percentageBasalSum()) + "U ";
-    }
-
-    public boolean isNSProfileActive() {
-        if (!convertedProfile.getDefaultProfile().isValid(MainApp.gs(R.string.nsprofile))) {
-            log.debug("Detected active NSProfile!");
-            return true;
-        }
-        log.debug("No NS profile");
-        return false;
-    }
-
-
-    public void uploadToNS(){
-        if(convertedProfile != null) {
-            NSUpload.uploadProfileToNS(new ProfileStore(convertedProfile.getData()).getData());
-        } else
-            log.debug("No converted profile to upload!");
     }
 
     public ProfileStore getConvertedProfile(){

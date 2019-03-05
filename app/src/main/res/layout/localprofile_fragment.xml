@@ -34,7 +34,6 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="3dp"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/nsclient_smallicon"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="@string/localprofile_get_from_ns" />

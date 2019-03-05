@@ -1316,6 +1316,7 @@
     <string name="dst_loop_disabled_warning">Dayligh Saving time change in less than 3 hours - Closed loop diabled</string>
 
     <string name="profile_copy">Copy Active NS Profile to LocalProfile</string>
+    <string name="profile_upload">Copy Active LocalProfile to Nightscout</string>
 
     <plurals name="objective_days">
         <item quantity="one">%1$d day</item>

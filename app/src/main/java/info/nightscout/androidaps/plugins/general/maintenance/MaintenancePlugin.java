@@ -235,6 +235,7 @@ public class MaintenancePlugin extends PluginBase {
     public void uploadToNS(){
         if(LocalProfilePlugin.getPlugin().getConvertedProfile() != null) {
             NSUpload.uploadProfileToNS(new ProfileStore(LocalProfilePlugin.getPlugin().getConvertedProfile().getData()).getData());
+            LOG.debug("Uploading converted profile to NS");
         } else
             LOG.debug("No converted profile to upload!");
     }
