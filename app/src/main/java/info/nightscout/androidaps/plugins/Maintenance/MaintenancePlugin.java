@@ -3,8 +3,12 @@ package info.nightscout.androidaps.plugins.Maintenance;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +36,7 @@ import info.nightscout.androidaps.interfaces.PluginDescription;
 import info.nightscout.androidaps.interfaces.PluginType;
 import info.nightscout.androidaps.logging.L;
 import info.nightscout.androidaps.plugins.ConfigBuilder.ProfileFunctions;
+import info.nightscout.androidaps.plugins.NSClientInternal.NSUpload;
 import info.nightscout.androidaps.plugins.NSClientInternal.data.NSSettingsStatus;
 import info.nightscout.androidaps.utils.SP;
 import info.nightscout.androidaps.plugins.ProfileLocal.LocalProfilePlugin;
@@ -227,6 +232,13 @@ public class MaintenancePlugin extends PluginBase {
         SP.putString(LocalProfilePlugin.LOCAL_PROFILE + "targethigh", defaultNsProfile.getRawTargetHigh().toString());
     }
 
+    public void uploadToNS(){
+        if(LocalProfilePlugin.getPlugin().getConvertedProfile() != null) {
+            NSUpload.uploadProfileToNS(new ProfileStore(LocalProfilePlugin.getPlugin().getConvertedProfile().getData()).getData());
+        } else
+            LOG.debug("No converted profile to upload!");
+    }
+
     public static Intent sendMail(Uri attachementUri, String recipient, String subject)  {
         StringBuilder builder =new StringBuilder();
         
@@ -280,6 +292,7 @@ public class MaintenancePlugin extends PluginBase {
 
         return emailIntent;
     }
+
 
 
 }
