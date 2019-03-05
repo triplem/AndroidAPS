@@ -40,4 +40,9 @@ public class MaintenancePluginTest {
         assertTrue(zipFile.isFile());
     }
 
+    @Test
+    public void copyActiveNSProfileToLocalProfileTest(){
+
+    }
+
 }
