@@ -27,6 +27,9 @@
 
         </EditTextPreference>
 
+        <CheckBoxPreference
+            android:key="@string/key_maintenance_material_theme"
+            android:title="@string/maintenance_material_theme"/>
 
     </PreferenceCategory>
 

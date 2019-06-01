@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(SP.getBoolean(R.string.key_maintenance_material_theme, false));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -222,7 +222,9 @@ public class MainActivity extends AppCompatActivity {
         menu.clear();
         for (PluginBase p : MainApp.getPluginsList()) {
             pageAdapter.registerNewFragment(p);
-            if (p.hasFragment() && !p.isFragmentVisible() && p.isEnabled(p.pluginDescription.getType()) && !p.pluginDescription.neverVisible) {
+            if (p.hasFragment()  && p.isEnabled(p.pluginDescription.getType())
+                    && ((!p.isFragmentVisible() && !p.pluginDescription.neverVisible)
+                    || SP.getBoolean(R.string.key_maintenance_material_theme, false))) {
                 MenuItem menuItem = menu.add(p.getName());
                 menuItem.setCheckable(true);
                 menuItem.setOnMenuItemClickListener(item -> {
@@ -242,23 +244,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupTabs() {
-        ViewPager viewPager = findViewById(R.id.pager);
-        TabLayout normalTabs = findViewById(R.id.tabs_normal);
-        normalTabs.setupWithViewPager(viewPager, true);
-        TabLayout compactTabs = findViewById(R.id.tabs_compact);
-        compactTabs.setupWithViewPager(viewPager, true);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (SP.getBoolean("short_tabtitles", false)) {
-            normalTabs.setVisibility(View.GONE);
-            compactTabs.setVisibility(View.VISIBLE);
-            toolbar.setLayoutParams(new LinearLayout.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.compact_height)));
-        } else {
-            normalTabs.setVisibility(View.VISIBLE);
-            compactTabs.setVisibility(View.GONE);
-            TypedValue typedValue = new TypedValue();
-            if (getTheme().resolveAttribute(R.attr.actionBarSize, typedValue, true)) {
-                toolbar.setLayoutParams(new LinearLayout.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT,
-                        TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics())));
+        if (!SP.getBoolean(R.string.key_maintenance_material_theme, false)) {
+            ViewPager viewPager = findViewById(R.id.pager);
+            TabLayout normalTabs = findViewById(R.id.tabs_normal);
+            normalTabs.setupWithViewPager(viewPager, true);
+            TabLayout compactTabs = findViewById(R.id.tabs_compact);
+            compactTabs.setupWithViewPager(viewPager, true);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            if (SP.getBoolean("short_tabtitles", false)) {
+                normalTabs.setVisibility(View.GONE);
+                compactTabs.setVisibility(View.VISIBLE);
+                toolbar.setLayoutParams(new LinearLayout.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.compact_height)));
+            } else {
+                normalTabs.setVisibility(View.VISIBLE);
+                compactTabs.setVisibility(View.GONE);
+                TypedValue typedValue = new TypedValue();
+                if (getTheme().resolveAttribute(R.attr.actionBarSize, typedValue, true)) {
+                    toolbar.setLayoutParams(new LinearLayout.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT,
+                            TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics())));
+                }
             }
         }
     }
