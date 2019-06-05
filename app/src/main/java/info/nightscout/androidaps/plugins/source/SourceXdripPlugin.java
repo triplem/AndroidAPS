@@ -44,6 +44,9 @@ public class SourceXdripPlugin extends PluginBase implements BgSourceInterface {
 
     @Override
     public boolean advancedFilteringSupported() {
+        if (MainApp.overwriteAdvancedFiltering) {
+            return true;
+        }
         return advancedFiltering;
     }
 
@@ -70,6 +73,7 @@ public class SourceXdripPlugin extends PluginBase implements BgSourceInterface {
     }
 
     public void setSource(String source) {
-        this.advancedFiltering = source.contains("G5 Native")||source.contains("G6 Native");
+        this.advancedFiltering = source.contains("G5 Native")
+                || source.contains("G6 Native") || MainApp.overwriteAdvancedFiltering;
     }
 }
