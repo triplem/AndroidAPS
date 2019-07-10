@@ -3,7 +3,7 @@ package info.nightscout.androidaps.plugins.general.overview;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
-import android.arch.core.util.Function;
+import androidx.arch.core.util.Function;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +12,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
@@ -34,18 +34,15 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.crashlytics.android.answers.CustomEvent;
 import com.jjoe64.graphview.GraphView;
 import com.squareup.otto.Subscribe;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -55,8 +52,6 @@ import info.nightscout.androidaps.Config;
 import info.nightscout.androidaps.Constants;
 import info.nightscout.androidaps.MainApp;
 import info.nightscout.androidaps.R;
-import info.nightscout.androidaps.data.DetailedBolusInfo;
-import info.nightscout.androidaps.data.GlucoseStatus;
 import info.nightscout.androidaps.data.IobTotal;
 import info.nightscout.androidaps.data.Profile;
 import info.nightscout.androidaps.data.QuickWizardEntry;
@@ -72,7 +67,7 @@ import info.nightscout.androidaps.events.EventCareportalEventChange;
 import info.nightscout.androidaps.events.EventExtendedBolusChange;
 import info.nightscout.androidaps.events.EventInitializationChanged;
 import info.nightscout.androidaps.events.EventPreferenceChange;
-import info.nightscout.androidaps.events.EventProfileSwitchChange;
+import info.nightscout.androidaps.events.EventProfileNeedsUpdate;
 import info.nightscout.androidaps.events.EventPumpStatusChanged;
 import info.nightscout.androidaps.events.EventRefreshOverview;
 import info.nightscout.androidaps.events.EventTempBasalChange;
@@ -83,44 +78,40 @@ import info.nightscout.androidaps.interfaces.PluginType;
 import info.nightscout.androidaps.interfaces.PumpDescription;
 import info.nightscout.androidaps.interfaces.PumpInterface;
 import info.nightscout.androidaps.logging.L;
-import info.nightscout.androidaps.plugins.general.careportal.CareportalFragment;
-import info.nightscout.androidaps.plugins.general.careportal.Dialogs.NewNSTreatmentDialog;
-import info.nightscout.androidaps.plugins.general.careportal.OptionsToShow;
-import info.nightscout.androidaps.plugins.configBuilder.ConfigBuilderPlugin;
-import info.nightscout.androidaps.plugins.configBuilder.ProfileFunctions;
-import info.nightscout.androidaps.plugins.iob.iobCobCalculator.AutosensData;
-import info.nightscout.androidaps.plugins.iob.iobCobCalculator.CobInfo;
-import info.nightscout.androidaps.plugins.iob.iobCobCalculator.IobCobCalculatorPlugin;
-import info.nightscout.androidaps.plugins.iob.iobCobCalculator.events.EventAutosensCalculationFinished;
-import info.nightscout.androidaps.plugins.iob.iobCobCalculator.events.EventIobCalculationProgress;
 import info.nightscout.androidaps.plugins.aps.loop.APSResult;
 import info.nightscout.androidaps.plugins.aps.loop.LoopPlugin;
 import info.nightscout.androidaps.plugins.aps.loop.events.EventNewOpenLoopNotification;
+import info.nightscout.androidaps.plugins.configBuilder.ConfigBuilderPlugin;
+import info.nightscout.androidaps.plugins.configBuilder.ProfileFunctions;
+import info.nightscout.androidaps.plugins.general.careportal.CareportalFragment;
+import info.nightscout.androidaps.plugins.general.careportal.Dialogs.NewNSTreatmentDialog;
+import info.nightscout.androidaps.plugins.general.careportal.OptionsToShow;
 import info.nightscout.androidaps.plugins.general.nsclient.NSUpload;
 import info.nightscout.androidaps.plugins.general.nsclient.data.NSDeviceStatus;
 import info.nightscout.androidaps.plugins.general.nsclient.data.NSSettingsStatus;
-import info.nightscout.androidaps.plugins.general.overview.Dialogs.CalibrationDialog;
-import info.nightscout.androidaps.plugins.general.overview.Dialogs.ErrorHelperActivity;
-import info.nightscout.androidaps.plugins.general.overview.Dialogs.NewCarbsDialog;
-import info.nightscout.androidaps.plugins.general.overview.Dialogs.NewInsulinDialog;
-import info.nightscout.androidaps.plugins.general.overview.Dialogs.NewTreatmentDialog;
-import info.nightscout.androidaps.plugins.general.overview.Dialogs.WizardDialog;
 import info.nightscout.androidaps.plugins.general.overview.activities.QuickWizardListActivity;
+import info.nightscout.androidaps.plugins.general.overview.dialogs.CalibrationDialog;
+import info.nightscout.androidaps.plugins.general.overview.dialogs.NewCarbsDialog;
+import info.nightscout.androidaps.plugins.general.overview.dialogs.NewInsulinDialog;
+import info.nightscout.androidaps.plugins.general.overview.dialogs.NewTreatmentDialog;
+import info.nightscout.androidaps.plugins.general.overview.dialogs.WizardDialog;
 import info.nightscout.androidaps.plugins.general.overview.graphData.GraphData;
-import info.nightscout.androidaps.plugins.general.overview.notifications.NotificationRecyclerViewAdapter;
-import info.nightscout.androidaps.plugins.general.overview.notifications.NotificationStore;
-import info.nightscout.androidaps.plugins.source.SourceDexcomG5Plugin;
-import info.nightscout.androidaps.plugins.source.SourceDexcomG6Plugin;
+import info.nightscout.androidaps.plugins.general.wear.ActionStringHandler;
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.AutosensData;
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.CobInfo;
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus;
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.IobCobCalculatorPlugin;
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.events.EventAutosensCalculationFinished;
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.events.EventIobCalculationProgress;
+import info.nightscout.androidaps.plugins.source.SourceDexcomPlugin;
 import info.nightscout.androidaps.plugins.source.SourceXdripPlugin;
 import info.nightscout.androidaps.plugins.treatments.TreatmentsPlugin;
 import info.nightscout.androidaps.plugins.treatments.fragments.ProfileViewerDialog;
-import info.nightscout.androidaps.plugins.general.wear.ActionStringHandler;
 import info.nightscout.androidaps.queue.Callback;
 import info.nightscout.androidaps.utils.BolusWizard;
 import info.nightscout.androidaps.utils.DateUtil;
 import info.nightscout.androidaps.utils.DecimalFormatter;
 import info.nightscout.androidaps.utils.DefaultValueHelper;
-import info.nightscout.androidaps.utils.FabricPrivacy;
 import info.nightscout.androidaps.utils.OKDialog;
 import info.nightscout.androidaps.utils.Profiler;
 import info.nightscout.androidaps.utils.SP;
@@ -268,15 +259,15 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         sage = (TextView) view.findViewById(R.id.careportal_sensorage);
         pbage = (TextView) view.findViewById(R.id.careportal_pbage);
 
-            iageView = (TextView) view.findViewById(R.id.overview_insulinage);
-            cageView = (TextView) view.findViewById(R.id.overview_canulaage);
-            reservoirView = (TextView) view.findViewById(R.id.overview_reservoirlevel);
-            sageView = (TextView) view.findViewById(R.id.overview_sensorage);
-            batteryView = (TextView) view.findViewById(R.id.overview_batterylevel);
-            statuslightsLayout = (LinearLayout) view.findViewById(R.id.overview_statuslights);
+        iageView = (TextView) view.findViewById(R.id.overview_insulinage);
+        cageView = (TextView) view.findViewById(R.id.overview_canulaage);
+        reservoirView = (TextView) view.findViewById(R.id.overview_reservoirlevel);
+        sageView = (TextView) view.findViewById(R.id.overview_sensorage);
+        batteryView = (TextView) view.findViewById(R.id.overview_batterylevel);
+        statuslightsLayout = (LinearLayout) view.findViewById(R.id.overview_statuslights);
 
-            bgGraph = (GraphView) view.findViewById(R.id.overview_bggraph);
-            iobGraph = (GraphView) view.findViewById(R.id.overview_iobgraph);
+        bgGraph = (GraphView) view.findViewById(R.id.overview_bggraph);
+        iobGraph = (GraphView) view.findViewById(R.id.overview_iobgraph);
 
         treatmentButton = (SingleClickButton) view.findViewById(R.id.overview_treatmentbutton);
         treatmentButton.setOnClickListener(this);
@@ -475,7 +466,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
                     menu.add(MainApp.gs(R.string.suspendloopfor2h));
                     menu.add(MainApp.gs(R.string.suspendloopfor3h));
                     menu.add(MainApp.gs(R.string.suspendloopfor10h));
-                }  else  {
+                } else {
                     if (!loopPlugin.isDisconnected()) {
                         menu.add(MainApp.gs(R.string.resume));
                     }
@@ -488,7 +479,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
 
             if (!loopPlugin.isDisconnected()) {
                 showSuspendtPump(menu, pumpDescription);
-            }  else {
+            } else {
                 menu.add(MainApp.gs(R.string.reconnect));
             }
 
@@ -664,8 +655,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         boolean xdrip = SourceXdripPlugin.getPlugin().isEnabled(PluginType.BGSOURCE);
-        boolean g5 = SourceDexcomG5Plugin.getPlugin().isEnabled(PluginType.BGSOURCE);
-        boolean g6 = SourceDexcomG6Plugin.getPlugin().isEnabled(PluginType.BGSOURCE);
+        boolean dexcom = SourceDexcomPlugin.INSTANCE.isEnabled(PluginType.BGSOURCE);
         String units = ProfileFunctions.getInstance().getProfileUnits();
 
         FragmentManager manager = getFragmentManager();
@@ -688,10 +678,16 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
                 if (xdrip) {
                     CalibrationDialog calibrationDialog = new CalibrationDialog();
                     calibrationDialog.show(manager, "CalibrationDialog");
-                } else if (g5 || g6) {
+                } else if (dexcom) {
                     try {
-                        Intent i = new Intent("com.dexcom.cgm.activities.MeterEntryActivity");
-                        startActivity(i);
+                        String packageName = SourceDexcomPlugin.INSTANCE.findDexcomPackageName();
+                        if (packageName != null) {
+                            Intent i = new Intent("com.dexcom.cgm.activities.MeterEntryActivity");
+                            i.setPackage(packageName);
+                            startActivity(i);
+                        } else {
+                            ToastUtils.showToastInUiThread(getActivity(), MainApp.gs(R.string.dexcom_app_not_installed));
+                        }
                     } catch (ActivityNotFoundException e) {
                         ToastUtils.showToastInUiThread(getActivity(), MainApp.gs(R.string.g5appnotdetected));
                     }
@@ -700,14 +696,14 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
             case R.id.overview_cgmbutton:
                 if (xdrip)
                     openCgmApp("com.eveningoutpost.dexdrip");
-                else if (g5 && units.equals(Constants.MGDL))
-                    openCgmApp("com.dexcom.cgm.region5.mgdl");
-                else if (g5 && units.equals(Constants.MMOL))
-                    openCgmApp("com.dexcom.cgm.region5.mmol");
-                else if (g6 && units.equals(Constants.MGDL))
-                    openCgmApp("com.dexcom.g6.region3.mgdl");
-                else if (g6 && units.equals(Constants.MMOL))
-                    openCgmApp("com.dexcom.g6.region3.mmol");
+                else if (dexcom) {
+                    String packageName = SourceDexcomPlugin.INSTANCE.findDexcomPackageName();
+                    if (packageName != null) {
+                        openCgmApp(packageName);
+                    } else {
+                        ToastUtils.showToastInUiThread(getActivity(), MainApp.gs(R.string.dexcom_app_not_installed));
+                    }
+                }
                 break;
             case R.id.overview_treatmentbutton:
                 NewTreatmentDialog treatmentDialogFragment = new NewTreatmentDialog();
@@ -784,123 +780,25 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
     void onClickQuickwizard() {
         final BgReading actualBg = DatabaseHelper.actualBg();
         final Profile profile = ProfileFunctions.getInstance().getProfile();
-        final TempTarget tempTarget = TreatmentsPlugin.getPlugin().getTempTargetFromHistory();
+        final String profileName = ProfileFunctions.getInstance().getProfileName();
+        final PumpInterface pump = ConfigBuilderPlugin.getPlugin().getActivePump();
 
         final QuickWizardEntry quickWizardEntry = OverviewPlugin.getPlugin().quickWizard.getActive();
-        if (quickWizardEntry != null && actualBg != null && profile != null) {
+        if (quickWizardEntry != null && actualBg != null && profile != null && pump != null) {
             quickWizardButton.setVisibility(View.VISIBLE);
-            final BolusWizard wizard = quickWizardEntry.doCalc(profile, tempTarget, actualBg, true);
+            final BolusWizard wizard = quickWizardEntry.doCalc(profile, profileName, actualBg, true);
 
-            final JSONObject boluscalcJSON = new JSONObject();
-            try {
-                boluscalcJSON.put("eventTime", DateUtil.toISOString(new Date()));
-                boluscalcJSON.put("targetBGLow", wizard.targetBGLow);
-                boluscalcJSON.put("targetBGHigh", wizard.targetBGHigh);
-                boluscalcJSON.put("isf", wizard.sens);
-                boluscalcJSON.put("ic", wizard.ic);
-                boluscalcJSON.put("iob", -(wizard.insulingFromBolusIOB + wizard.insulingFromBasalsIOB));
-                boluscalcJSON.put("bolusiobused", true);
-                boluscalcJSON.put("basaliobused", true);
-                boluscalcJSON.put("bg", actualBg.valueToUnits(profile.getUnits()));
-                boluscalcJSON.put("insulinbg", wizard.insulinFromBG);
-                boluscalcJSON.put("insulinbgused", true);
-                boluscalcJSON.put("bgdiff", wizard.bgDiff);
-                boluscalcJSON.put("insulincarbs", wizard.insulinFromCarbs);
-                boluscalcJSON.put("carbs", quickWizardEntry.carbs());
-                boluscalcJSON.put("othercorrection", 0d);
-                boluscalcJSON.put("insulintrend", wizard.insulinFromTrend);
-                boluscalcJSON.put("insulin", wizard.calculatedTotalInsulin);
-            } catch (JSONException e) {
-                log.error("Unhandled exception", e);
-            }
-            if (wizard.calculatedTotalInsulin > 0d && quickWizardEntry.carbs() > 0d) {
-                DecimalFormat formatNumber2decimalplaces = new DecimalFormat("0.00");
-                String confirmMessage = MainApp.gs(R.string.entertreatmentquestion);
-
-                Double insulinAfterConstraints = MainApp.getConstraintChecker().applyBolusConstraints(new Constraint<>(wizard.calculatedTotalInsulin)).value();
+            if (wizard.getCalculatedTotalInsulin() > 0d && quickWizardEntry.carbs() > 0d) {
                 Integer carbsAfterConstraints = MainApp.getConstraintChecker().applyCarbsConstraints(new Constraint<>(quickWizardEntry.carbs())).value();
 
-                confirmMessage += "\n" + MainApp.gs(R.string.bolus) + ": " + formatNumber2decimalplaces.format(insulinAfterConstraints) + "U";
-                confirmMessage += "\n" + MainApp.gs(R.string.carbs) + ": " + carbsAfterConstraints + "g";
-
-                if (Math.abs(insulinAfterConstraints - wizard.calculatedTotalInsulin) >= 0.01 || !carbsAfterConstraints.equals(quickWizardEntry.carbs())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle(MainApp.gs(R.string.treatmentdeliveryerror));
-                    builder.setMessage(MainApp.gs(R.string.constraints_violation) + "\n" + MainApp.gs(R.string.changeyourinput));
-                    builder.setPositiveButton(MainApp.gs(R.string.ok), null);
-                    builder.show();
+                if (Math.abs(wizard.getInsulinAfterConstraints() - wizard.getCalculatedTotalInsulin()) >= pump.getPumpDescription().pumpType.determineCorrectBolusStepSize(wizard.getInsulinAfterConstraints()) || !carbsAfterConstraints.equals(quickWizardEntry.carbs())) {
+                    OKDialog.show(getContext(), MainApp.gs(R.string.treatmentdeliveryerror), MainApp.gs(R.string.constraints_violation) + "\n" + MainApp.gs(R.string.changeyourinput), null);
                     return;
                 }
 
-                final Double finalInsulinAfterConstraints = insulinAfterConstraints;
-                final Integer finalCarbsAfterConstraints = carbsAfterConstraints;
-                final Context context = getContext();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                accepted = false;
-                builder.setTitle(MainApp.gs(R.string.confirmation));
-                builder.setMessage(confirmMessage);
-                builder.setPositiveButton(MainApp.gs(R.string.ok), (dialog, id) -> {
-                    synchronized (builder) {
-                        if (accepted) {
-                            if (L.isEnabled(L.OVERVIEW))
-                                log.debug("guarding: already accepted");
-                            return;
-                        }
-                        accepted = true;
-                        if (Math.abs(insulinAfterConstraints - wizard.calculatedTotalInsulin) >= 0.01 || finalCarbsAfterConstraints > 0) {
-                            if (wizard.superBolus) {
-                                final LoopPlugin loopPlugin = LoopPlugin.getPlugin();
-                                if (loopPlugin.isEnabled(PluginType.LOOP)) {
-                                    loopPlugin.superBolusTo(System.currentTimeMillis() + T.hours(2).msecs());
-                                    MainApp.bus().post(new EventRefreshOverview("WizardDialog"));
-                                }
-                                ConfigBuilderPlugin.getPlugin().getCommandQueue().tempBasalPercent(0, 120, true, profile, new Callback() {
-                                    @Override
-                                    public void run() {
-                                        if (!result.success) {
-                                            Intent i = new Intent(MainApp.instance(), ErrorHelperActivity.class);
-                                            i.putExtra("soundid", R.raw.boluserror);
-                                            i.putExtra("status", result.comment);
-                                            i.putExtra("title", MainApp.gs(R.string.tempbasaldeliveryerror));
-                                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            MainApp.instance().startActivity(i);
-                                        }
-                                    }
-                                });
-                            }
-                            DetailedBolusInfo detailedBolusInfo = new DetailedBolusInfo();
-                            detailedBolusInfo.eventType = CareportalEvent.BOLUSWIZARD;
-                            detailedBolusInfo.insulin = finalInsulinAfterConstraints;
-                            detailedBolusInfo.carbs = finalCarbsAfterConstraints;
-                            detailedBolusInfo.context = context;
-                            detailedBolusInfo.boluscalc = boluscalcJSON;
-                            detailedBolusInfo.source = Source.USER;
-                            if (finalInsulinAfterConstraints > 0 || ConfigBuilderPlugin.getPlugin().getActivePump().getPumpDescription().storesCarbInfo) {
-                                ConfigBuilderPlugin.getPlugin().getCommandQueue().bolus(detailedBolusInfo, new Callback() {
-                                    @Override
-                                    public void run() {
-                                        if (!result.success) {
-                                            Intent i = new Intent(MainApp.instance(), ErrorHelperActivity.class);
-                                            i.putExtra("soundid", R.raw.boluserror);
-                                            i.putExtra("status", result.comment);
-                                            i.putExtra("title", MainApp.gs(R.string.treatmentdeliveryerror));
-                                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            MainApp.instance().startActivity(i);
-                                        }
-                                    }
-                                });
-                            } else {
-                                TreatmentsPlugin.getPlugin().addToHistoryTreatment(detailedBolusInfo, false);
-                            }
-                            FabricPrivacy.getInstance().logCustom(new CustomEvent("QuickWizard"));
-                        }
-                    }
-                });
-                builder.setNegativeButton(MainApp.gs(R.string.cancel), null);
-                builder.show();
+                wizard.confirmAndExecute(getContext());
             }
         }
-
     }
 
     @Override
@@ -984,8 +882,8 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Subscribe
-    public void onStatusEvent(final EventProfileSwitchChange ev) {
-        scheduleUpdateGUI("EventProfileSwitchChange");
+    public void onStatusEvent(final EventProfileNeedsUpdate ev) {
+        scheduleUpdateGUI("EventProfileNeedsUpdate");
     }
 
     @Subscribe
@@ -1066,7 +964,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
             timeView.setText(DateUtil.timeString(new Date()));
         }
 
-        updateNotifications();
+        OverviewPlugin.getPlugin().notificationStore.updateNotifications(notificationsView);
 
         pumpStatusLayout.setVisibility(View.GONE);
         loopStatusLayout.setVisibility(View.GONE);
@@ -1085,6 +983,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         final PumpInterface pump = ConfigBuilderPlugin.getPlugin().getActivePump();
 
         final Profile profile = ProfileFunctions.getInstance().getProfile();
+        final String profileName = ProfileFunctions.getInstance().getProfileName();
 
         final String units = profile.getUnits();
         final double lowLine = OverviewPlugin.getPlugin().determineLowLine(units);
@@ -1192,10 +1091,10 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
 
         // **** Calibration & CGM buttons ****
         boolean xDripIsBgSource = MainApp.getSpecificPlugin(SourceXdripPlugin.class) != null && MainApp.getSpecificPlugin(SourceXdripPlugin.class).isEnabled(PluginType.BGSOURCE);
-        boolean g5IsBgSource = MainApp.getSpecificPlugin(SourceDexcomG5Plugin.class) != null && MainApp.getSpecificPlugin(SourceDexcomG5Plugin.class).isEnabled(PluginType.BGSOURCE);
+        boolean dexcomIsSource = SourceDexcomPlugin.INSTANCE.isEnabled(PluginType.BGSOURCE);
         boolean bgAvailable = DatabaseHelper.actualBg() != null;
         if (calibrationButton != null) {
-            if ((xDripIsBgSource || g5IsBgSource) && bgAvailable && SP.getBoolean(R.string.key_show_calibration_button, true)) {
+            if ((xDripIsBgSource || dexcomIsSource) && bgAvailable && SP.getBoolean(R.string.key_show_calibration_button, true)) {
                 calibrationButton.setVisibility(View.VISIBLE);
             } else {
                 calibrationButton.setVisibility(View.GONE);
@@ -1204,7 +1103,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         if (cgmButton != null) {
             if (xDripIsBgSource && SP.getBoolean(R.string.key_show_cgm_button, false)) {
                 cgmButton.setVisibility(View.VISIBLE);
-            } else if (g5IsBgSource && SP.getBoolean(R.string.key_show_cgm_button, false)) {
+            } else if (dexcomIsSource && SP.getBoolean(R.string.key_show_cgm_button, false)) {
                 cgmButton.setVisibility(View.VISIBLE);
             } else {
                 cgmButton.setVisibility(View.GONE);
@@ -1282,10 +1181,10 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         if (quickWizardEntry != null && lastBG != null && pump.isInitialized() && !pump.isSuspended()) {
             quickWizardButton.setVisibility(View.VISIBLE);
             String text = quickWizardEntry.buttonText() + "\n" + DecimalFormatter.to0Decimal(quickWizardEntry.carbs()) + "g";
-            BolusWizard wizard = quickWizardEntry.doCalc(profile, tempTarget, lastBG, false);
-            text += " " + DecimalFormatter.toPumpSupportedBolus(wizard.calculatedTotalInsulin) + "U";
+            BolusWizard wizard = quickWizardEntry.doCalc(profile, profileName, lastBG, false);
+            text += " " + DecimalFormatter.toPumpSupportedBolus(wizard.getCalculatedTotalInsulin()) + "U";
             quickWizardButton.setText(text);
-            if (wizard.calculatedTotalInsulin <= 0)
+            if (wizard.getCalculatedTotalInsulin() <= 0)
                 quickWizardButton.setVisibility(View.GONE);
         } else
             quickWizardButton.setVisibility(View.GONE);
@@ -1461,7 +1360,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         if (sensitivityView != null) {
             AutosensData autosensData = IobCobCalculatorPlugin.getPlugin().getLastAutosensData("Overview");
             if (autosensData != null)
-                sensitivityView.setText(String.format("%.0f%%", autosensData.autosensResult.ratio * 100));
+                sensitivityView.setText(String.format(Locale.ENGLISH, "%.0f%%", autosensData.autosensResult.ratio * 100));
             else
                 sensitivityView.setText("");
         }
@@ -1603,21 +1502,6 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
 
         if (L.isEnabled(L.OVERVIEW))
             Profiler.log(log, from, updateGUIStart);
-    }
-
-    //Notifications
-
-    void updateNotifications() {
-        NotificationStore nstore = OverviewPlugin.getPlugin().notificationStore;
-        nstore.removeExpired();
-        nstore.unSnooze();
-        if (nstore.store.size() > 0) {
-            NotificationRecyclerViewAdapter adapter = new NotificationRecyclerViewAdapter(nstore.store);
-            notificationsView.setAdapter(adapter);
-            notificationsView.setVisibility(View.VISIBLE);
-        } else {
-            notificationsView.setVisibility(View.GONE);
-        }
     }
 
     public static void applyStatuslight(TextView view, String text, double value, double warnThreshold, double urgentThreshold, double invalid, boolean checkAscending) {

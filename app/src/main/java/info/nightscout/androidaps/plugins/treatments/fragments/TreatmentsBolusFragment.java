@@ -6,19 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.crashlytics.android.answers.CustomEvent;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
@@ -40,7 +39,6 @@ import info.nightscout.androidaps.plugins.treatments.dialogs.WizardInfoDialog;
 import info.nightscout.androidaps.services.Intents;
 import info.nightscout.androidaps.utils.DateUtil;
 import info.nightscout.androidaps.utils.DecimalFormatter;
-import info.nightscout.androidaps.utils.FabricPrivacy;
 import info.nightscout.androidaps.utils.SP;
 
 import static info.nightscout.androidaps.utils.DateUtil.now;
@@ -165,7 +163,6 @@ public class TreatmentsBolusFragment extends SubscriberFragment implements View.
                                     TreatmentsPlugin.getPlugin().getService().delete(treatment);
                                 }
                                 updateGUI();
-                                FabricPrivacy.getInstance().logCustom(new CustomEvent("RemoveTreatment"));
                             }
                         });
                         builder.setNegativeButton(MainApp.gs(R.string.cancel), null);

@@ -3,9 +3,9 @@ package info.nightscout.androidaps.setupwizard;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,7 +22,7 @@ import info.nightscout.androidaps.MainActivity;
 import info.nightscout.androidaps.MainApp;
 import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.events.EventProfileStoreChanged;
-import info.nightscout.androidaps.events.EventProfileSwitchChange;
+import info.nightscout.androidaps.events.EventProfileNeedsUpdate;
 import info.nightscout.androidaps.events.EventPumpStatusChanged;
 import info.nightscout.androidaps.plugins.constraints.objectives.events.EventObjectivesSaved;
 import info.nightscout.androidaps.plugins.general.nsclient.events.EventNSClientStatus;
@@ -115,7 +115,7 @@ public class SetupWizardActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void onEventProfileSwitchChange(EventProfileSwitchChange ignored) {
+    public void onEventProfileSwitchChange(EventProfileNeedsUpdate ignored) {
         updateButtons();
     }
 

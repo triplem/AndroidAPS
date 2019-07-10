@@ -1,11 +1,11 @@
-package info.nightscout.androidaps.plugins.general.overview.Dialogs;
+package info.nightscout.androidaps.plugins.general.overview.dialogs;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.HandlerThread;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -20,7 +20,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.crashlytics.android.answers.CustomEvent;
 import com.google.common.base.Joiner;
 
 import org.slf4j.Logger;
@@ -46,7 +45,6 @@ import info.nightscout.androidaps.plugins.treatments.TreatmentsPlugin;
 import info.nightscout.androidaps.queue.Callback;
 import info.nightscout.androidaps.utils.DateUtil;
 import info.nightscout.androidaps.utils.DecimalFormatter;
-import info.nightscout.androidaps.utils.FabricPrivacy;
 import info.nightscout.androidaps.utils.NumberPicker;
 import info.nightscout.androidaps.utils.SP;
 import info.nightscout.androidaps.utils.SafeParse;
@@ -170,8 +168,8 @@ public class NewInsulinDialog extends DialogFragment implements OnClickListener 
         insulinDialogState.putBoolean("recordOnlyCheckbox", recordOnlyCheckbox.isChecked());
         insulinDialogState.putDouble("editTime", editTime.getValue());
         insulinDialogState.putDouble("editInsulin", editInsulin.getValue());
-        insulinDialogState.putString("notesEdit",notesEdit.getText().toString());
-        log.debug("Instance state saved:"+insulinDialogState.toString());
+        insulinDialogState.putString("notesEdit", notesEdit.getText().toString());
+        log.debug("Instance state saved:" + insulinDialogState.toString());
         super.onSaveInstanceState(insulinDialogState);
     }
 
@@ -227,7 +225,7 @@ public class NewInsulinDialog extends DialogFragment implements OnClickListener 
                 }
             }
 
-            if (Math.abs(insulinAfterConstraints - insulin) >  pump.getPumpDescription().pumpType.determineCorrectBolusSize(insulinAfterConstraints))
+            if (Math.abs(insulinAfterConstraints - insulin) > pump.getPumpDescription().pumpType.determineCorrectBolusStepSize(insulinAfterConstraints))
                 actions.add("<font color='" + MainApp.gc(R.color.warning) + "'>" + MainApp.gs(R.string.bolusconstraintapplied) + "</font>");
 
             int eatingSoonTTDuration = SP.getInt(R.string.key_eatingsoon_duration, Constants.defaultEatingSoonTTDuration);
@@ -306,7 +304,6 @@ public class NewInsulinDialog extends DialogFragment implements OnClickListener 
                                         }
                                     }
                                 });
-                                FabricPrivacy.getInstance().logCustom(new CustomEvent("Bolus"));
                             }
                         }
                     }

@@ -1,9 +1,9 @@
 package info.nightscout.androidaps.plugins.iob.iobCobCalculator;
 
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.util.LongSparseArray;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.collection.LongSparseArray;
 
 import com.squareup.otto.Subscribe;
 
@@ -65,7 +65,7 @@ public class IobCobCalculatorPlugin extends PluginBase {
     private volatile List<BgReading> bgReadings = null; // newest at index 0
     private volatile List<BgReading> bucketed_data = null;
 
-    final Object dataLock = new Object();
+    private final Object dataLock = new Object();
 
     boolean stopCalculationTrigger = false;
     private Thread thread = null;
@@ -106,6 +106,10 @@ public class IobCobCalculatorPlugin extends PluginBase {
 
     public List<BgReading> getBucketedData() {
         return bucketed_data;
+    }
+
+    public Object getDataLock() {
+        return dataLock;
     }
 
     // roundup to whole minute
@@ -387,28 +391,30 @@ public class IobCobCalculatorPlugin extends PluginBase {
     }
 
     public BasalData getBasalData(Profile profile, long time) {
-        long now = System.currentTimeMillis();
-        time = roundUpTime(time);
-        BasalData retval = basalDataTable.get(time);
-        if (retval == null) {
-            retval = new BasalData();
-            TemporaryBasal tb = TreatmentsPlugin.getPlugin().getTempBasalFromHistory(time);
-            retval.basal = profile.getBasal(time);
-            if (tb != null) {
-                retval.isTempBasalRunning = true;
-                retval.tempBasalAbsolute = tb.tempBasalConvertedToAbsolute(time, profile);
+        synchronized (dataLock) {
+            long now = System.currentTimeMillis();
+            time = roundUpTime(time);
+            BasalData retval = basalDataTable.get(time);
+            if (retval == null) {
+                retval = new BasalData();
+                TemporaryBasal tb = TreatmentsPlugin.getPlugin().getTempBasalFromHistory(time);
+                retval.basal = profile.getBasal(time);
+                if (tb != null) {
+                    retval.isTempBasalRunning = true;
+                    retval.tempBasalAbsolute = tb.tempBasalConvertedToAbsolute(time, profile);
+                } else {
+                    retval.isTempBasalRunning = false;
+                    retval.tempBasalAbsolute = retval.basal;
+                }
+                if (time < now) {
+                    basalDataTable.append(time, retval);
+                }
+                //log.debug(">>> getBasalData Cache miss " + new Date(time).toLocaleString());
             } else {
-                retval.isTempBasalRunning = false;
-                retval.tempBasalAbsolute = retval.basal;
+                //log.debug(">>> getBasalData Cache hit " +  new Date(time).toLocaleString());
             }
-            if (time < now) {
-                basalDataTable.append(time, retval);
-            }
-            //log.debug(">>> getBasalData Cache miss " + new Date(time).toLocaleString());
-        } else {
-            //log.debug(">>> getBasalData Cache hit " +  new Date(time).toLocaleString());
+            return retval;
         }
-        return retval;
     }
 
     @Nullable
@@ -494,6 +500,10 @@ public class IobCobCalculatorPlugin extends PluginBase {
             // in this rare case better return null and do not block UI
             // APS plugin should use getLastAutosensDataSynchronized where the blocking is not an issue
             log.debug("AUTOSENSDATA null: Exception catched (" + reason + ")");
+            return null;
+        }
+        if (data == null) {
+            log.debug("AUTOSENSDATA null: data==null");
             return null;
         }
         if (data.time < System.currentTimeMillis() - 11 * 60 * 1000) {
@@ -626,6 +636,7 @@ public class IobCobCalculatorPlugin extends PluginBase {
                 log.debug("Invalidating cached data because of new profile. IOB: " + iobTable.size() + " Autosens: " + autosensDataTable.size() + " records");
             iobTable = new LongSparseArray<>();
             autosensDataTable = new LongSparseArray<>();
+            basalDataTable = new LongSparseArray<>();
         }
         runCalculation("onNewProfile", System.currentTimeMillis(), false, true, ev);
     }
@@ -648,9 +659,10 @@ public class IobCobCalculatorPlugin extends PluginBase {
             stopCalculation("onEventPreferenceChange");
             synchronized (dataLock) {
                 if (L.isEnabled(L.AUTOSENS))
-                    log.debug("Invalidating cached data because of preference change. IOB: " + iobTable.size() + " Autosens: " + autosensDataTable.size() + " records");
+                    log.debug("Invalidating cached data because of preference change. IOB: " + iobTable.size() + " Autosens: " + autosensDataTable.size() + " records" + " BasalData: " + basalDataTable.size() + " records");
                 iobTable = new LongSparseArray<>();
                 autosensDataTable = new LongSparseArray<>();
+                basalDataTable = new LongSparseArray<>();
             }
             runCalculation("onEventPreferenceChange", System.currentTimeMillis(), false, true, ev);
         }
@@ -726,6 +738,7 @@ public class IobCobCalculatorPlugin extends PluginBase {
                 log.debug("Clearing cached data.");
             iobTable = new LongSparseArray<>();
             autosensDataTable = new LongSparseArray<>();
+            basalDataTable = new LongSparseArray<>();
         }
     }
 

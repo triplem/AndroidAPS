@@ -3,7 +3,7 @@ package info.nightscout.androidaps.plugins.general.maintenance;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -222,6 +222,7 @@ public class MaintenancePlugin extends PluginBase {
             builder.append("NSCLIENT" + System.lineSeparator());
 
         builder.append("Build: " + BuildConfig.BUILDVERSION + System.lineSeparator());
+        builder.append("Remote: " + BuildConfig.REMOTE + System.lineSeparator());
         builder.append("Flavor: " + BuildConfig.FLAVOR + BuildConfig.BUILD_TYPE + System.lineSeparator());
         builder.append(MainApp.gs(R.string.configbuilder_nightscoutversion_label) + " " + NSSettingsStatus.getInstance().nightscoutVersionName + System.lineSeparator());
         if (MainApp.engineeringMode)

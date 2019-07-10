@@ -3,8 +3,8 @@ package info.nightscout.androidaps.plugins.configBuilder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +16,6 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.crashlytics.android.answers.CustomEvent;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import info.nightscout.androidaps.MainApp;
-import info.nightscout.androidaps.activities.PreferencesActivity;
 import info.nightscout.androidaps.R;
+import info.nightscout.androidaps.activities.PreferencesActivity;
 import info.nightscout.androidaps.events.EventConfigBuilderChange;
 import info.nightscout.androidaps.events.EventRefreshGui;
 import info.nightscout.androidaps.interfaces.APSInterface;
@@ -42,7 +40,6 @@ import info.nightscout.androidaps.interfaces.SensitivityInterface;
 import info.nightscout.androidaps.plugins.common.SubscriberFragment;
 import info.nightscout.androidaps.plugins.insulin.InsulinOrefRapidActingPlugin;
 import info.nightscout.androidaps.plugins.profile.ns.NSProfilePlugin;
-
 import info.nightscout.androidaps.plugins.pump.virtual.VirtualPumpPlugin;
 import info.nightscout.androidaps.plugins.sensitivity.SensitivityOref0Plugin;
 import info.nightscout.androidaps.utils.FabricPrivacy;
@@ -276,7 +273,6 @@ public class ConfigBuilderFragment extends SubscriberFragment {
                 MainApp.bus().post(new EventRefreshGui());
                 MainApp.bus().post(new EventConfigBuilderChange());
                 ConfigBuilderPlugin.getPlugin().logPluginStatus();
-                FabricPrivacy.getInstance().logCustom(new CustomEvent("ConfigurationChange"));
             }
 
             public void cancel(){
