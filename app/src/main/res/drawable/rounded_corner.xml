@@ -2,9 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <stroke
         android:width="2dp"
-        android:color="@color/common_border_color" />
+        android:color="?attr/overviewPillColor" />
 
-    <solid android:color="#3A7EFF" />
+    <solid android:color="?attr/overviewPillColor" />
 
     <padding
         android:left="1dp"

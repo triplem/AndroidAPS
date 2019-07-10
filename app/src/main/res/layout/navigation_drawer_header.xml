@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:scaleType="centerCrop"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/navigation_drawer_header_clickable"
+        android:clickable="true"
+        android:foreground="@drawable/nav_drawer_header_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
+
+        <ImageView
+            android:id="@+id/navigation_drawer_user_account_picture_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/image_nav_drawer_account_background"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/navigation_drawer_account_section"
+        android:paddingBottom="2dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/navigation_drawer_user_account_picture_profile"
+            android:paddingTop="0dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/me"
+            app:srcCompat="@drawable/ic_account_circle_white_64dp"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigation_drawer_account_information_display_name"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:textSize="14sp"
+            android:textColor="#fff"
+            android:layout_alignParentBottom="true"
+        android:text="Andreas Eggen" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/navigation_drawer_account_information_email"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:textSize="14sp"
+            android:textColor="#fff"
+            android:layout_alignParentBottom="true"
+            android:text="andreas.eggen@gmail.com"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

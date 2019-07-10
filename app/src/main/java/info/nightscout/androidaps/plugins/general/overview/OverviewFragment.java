@@ -8,6 +8,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -16,12 +18,15 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -60,6 +65,7 @@ import java.util.concurrent.TimeUnit;
 
 import info.nightscout.androidaps.Config;
 import info.nightscout.androidaps.Constants;
+import info.nightscout.androidaps.MainActivity;
 import info.nightscout.androidaps.MainApp;
 import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.data.DetailedBolusInfo;
@@ -168,6 +174,9 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
     TextView cage;
     TextView sage;
     TextView pbage;
+
+    TextView pbLevel;
+    TextView prLevel;
 
     TextView iageView;
     TextView cageView;
@@ -280,6 +289,9 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         cage = (TextView) view.findViewById(R.id.careportal_canulaage);
         sage = (TextView) view.findViewById(R.id.careportal_sensorage);
         pbage = (TextView) view.findViewById(R.id.careportal_pbage);
+
+        pbLevel = view.findViewById(R.id.careportal_pbLevel);
+        prLevel = view.findViewById(R.id.careportal_prLevel);
 
         statuslightsLayout = (LinearLayout) view.findViewById(R.id.overview_statuslights);
 
@@ -1102,6 +1114,8 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         loopStatusLayout.setVisibility(View.VISIBLE);
 
         CareportalFragment.updateAge(getActivity(), sage, iage, cage, pbage);
+        CareportalFragment.updatePumpSpecifics(prLevel, pbLevel);
+
         BgReading actualBG = DatabaseHelper.actualBg();
         BgReading lastBG = DatabaseHelper.lastBg();
 
@@ -1151,7 +1165,10 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         if (Config.APS && pump.getPumpDescription().isTempBasalCapable) {
             apsModeView.setVisibility(View.VISIBLE);
             Drawable drawable = apsModeView.getBackground();
-            drawable.setColorFilter(getResources().getColor(R.color.ribbonDefault), PorterDuff.Mode.SRC_IN);
+            Resources.Theme theme = getContext().getTheme();
+            TypedValue typedValue = new TypedValue();
+            theme.resolveAttribute(R.attr.overviewPillColor, typedValue, true);
+            drawable.setColorFilter(typedValue.data, PorterDuff.Mode.SRC_IN);
             apsModeView.setTextColor(MainApp.gc(R.color.ribbonTextDefault));
             final LoopPlugin loopPlugin = LoopPlugin.getPlugin();
             if (loopPlugin.isEnabled(PluginType.LOOP) && loopPlugin.isSuperBolus()) {
@@ -1205,7 +1222,10 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         } else {
             tempTargetView.setTextColor(MainApp.gc(R.color.ribbonTextDefault));
             Drawable drawable = tempTargetView.getBackground();
-            drawable.setColorFilter(getResources().getColor(R.color.ribbonDefault), PorterDuff.Mode.SRC_IN);
+            Resources.Theme theme = getContext().getTheme();
+            TypedValue typedValue = new TypedValue();
+            theme.resolveAttribute(R.attr.overviewPillColor, typedValue, true);
+            drawable.setColorFilter(typedValue.data , PorterDuff.Mode.SRC_IN);
             tempTargetView.setText(Profile.toTargetRangeString(profile.getTargetLow(), profile.getTargetHigh(), units, units));
             tempTargetView.setVisibility(View.VISIBLE);
         }
@@ -1310,7 +1330,10 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
             activeProfileView.setTypeface(null, Typeface.BOLD);
         } else {
             Drawable drawable = activeProfileView.getBackground();
-            drawable.setColorFilter(getResources().getColor(R.color.ribbonDefault), PorterDuff.Mode.SRC_IN);
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = getContext().getTheme();
+            theme.resolveAttribute(R.attr.overviewPillColor, typedValue, true);
+            drawable.setColorFilter(typedValue.data , PorterDuff.Mode.SRC_IN);
             activeProfileView.setTextColor(MainApp.gc(R.color.ribbonTextDefault));
         }
 
@@ -1662,7 +1685,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
             } else if (check.apply(warnThreshold)) {
                 view.setTextColor(MainApp.gc(R.color.ribbonWarning));
             } else {
-                view.setTextColor(MainApp.gc(R.color.ribbonDefault));
+                view.setTextColor(MainApp.gc(R.color.overviewPillColor));
             }
             view.setVisibility(View.VISIBLE);
         } else {

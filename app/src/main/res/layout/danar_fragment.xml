@@ -112,10 +112,9 @@
 
                     <com.joanzapata.iconify.widget.IconTextView
                         android:id="@+id/danar_btconnection"
-                        android:background="@color/primaryColorGray"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="180dp"
+                        android:layout_marginEnd="80dp"
                         android:layout_weight="1"
                         android:gravity="start"
                         android:paddingLeft="5dp"
@@ -167,9 +166,8 @@
 
                     <com.joanzapata.iconify.widget.IconTextView
                         android:id="@+id/danar_battery"
-                        android:background="@color/primaryColorGray"
                         android:layout_width="match_parent"
-                        android:layout_marginEnd="160dp"
+                        android:layout_marginEnd="80dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="start"

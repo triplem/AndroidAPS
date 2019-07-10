@@ -23,12 +23,15 @@ import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.data.ProfileStore;
 import info.nightscout.androidaps.db.CareportalEvent;
 import info.nightscout.androidaps.events.EventCareportalEventChange;
+import info.nightscout.androidaps.interfaces.PumpInterface;
 import info.nightscout.androidaps.plugins.general.careportal.Dialogs.NewNSTreatmentDialog;
 import info.nightscout.androidaps.plugins.common.SubscriberFragment;
 import info.nightscout.androidaps.plugins.configBuilder.ConfigBuilderPlugin;
 import info.nightscout.androidaps.plugins.general.nsclient.data.NSSettingsStatus;
 import info.nightscout.androidaps.plugins.general.overview.OverviewFragment;
+import info.nightscout.androidaps.utils.DecimalFormatter;
 import info.nightscout.androidaps.utils.FabricPrivacy;
+import info.nightscout.androidaps.utils.SP;
 
 public class CareportalFragment extends SubscriberFragment implements View.OnClickListener {
     private static Logger log = LoggerFactory.getLogger(CareportalFragment.class);
@@ -37,6 +40,8 @@ public class CareportalFragment extends SubscriberFragment implements View.OnCli
     TextView cage;
     TextView sage;
     TextView pbage;
+    TextView pbLevel;
+    TextView prLevel;
 
     View statsLayout;
     LinearLayout butonsLayout;
@@ -96,6 +101,8 @@ public class CareportalFragment extends SubscriberFragment implements View.OnCli
             cage = (TextView) view.findViewById(R.id.careportal_canulaage);
             sage = (TextView) view.findViewById(R.id.careportal_sensorage);
             pbage = (TextView) view.findViewById(R.id.careportal_pbage);
+            pbLevel = view.findViewById(R.id.careportal_pbLevel);
+            prLevel = view.findViewById(R.id.careportal_prLevel);
 
             statsLayout = view.findViewById(R.id.careportal_stats);
 
@@ -209,6 +216,9 @@ public class CareportalFragment extends SubscriberFragment implements View.OnCli
     protected void updateGUI() {
         Activity activity = getActivity();
         updateAge(activity, sage, iage, cage, pbage);
+
+        // TODO need to define properties for warning of insulin resorvoir ;-)
+        updatePumpSpecifics(prLevel, pbLevel);
     }
 
     public static void updateAge(Activity activity, final TextView sage, final TextView iage, final TextView cage, final TextView pbage) {
@@ -238,7 +248,7 @@ public class CareportalFragment extends SubscriberFragment implements View.OnCli
         }
     }
 
-    public static int determineTextColor( TextView view,CareportalEvent careportalEvent, double warnThreshold, double urgentThreshold) {
+    public static int determineTextColor(TextView view,CareportalEvent careportalEvent, double warnThreshold, double urgentThreshold) {
         ColorStateList colorStateList = view.getTextColors();
         final int normalColor = colorStateList.getDefaultColor();
 
@@ -266,6 +276,40 @@ public class CareportalFragment extends SubscriberFragment implements View.OnCli
         }
 
         return age;
+    }
+
+    public static void updatePumpSpecifics(TextView reservoirLevel, TextView batteryLevel) {
+        double batUrgent = SP.getDouble(R.string.key_statuslights_bat_critical, 5.0);
+        double batWarn = SP.getDouble(R.string.key_statuslights_bat_warning, 25.0);
+        double resUrgent = SP.getDouble(R.string.key_statuslights_res_critical, 10.0);
+        double resWarn = SP.getDouble(R.string.key_statuslights_res_warning, 80.0);
+
+        PumpInterface pump = ConfigBuilderPlugin.getPlugin().getActivePump();
+        updatePumpEntry(reservoirLevel, pump.getReservoirLevel(),
+                DecimalFormatter.to2Decimal(pump.getReservoirLevel()), resWarn, resUrgent);
+        updatePumpEntry(batteryLevel, pump.getBatteryLevel(),
+                String.valueOf(pump.getBatteryLevel()), batWarn, batUrgent);
+    }
+
+    public static TextView updatePumpEntry(final TextView pumpEntry, final Number value,
+                                                    final String valueString, double warnThreshold, double urgentThreshold) {
+        String notavailable = OverviewFragment.shorttextmode ? "-" : MainApp.gs(R.string.notavailable);
+
+        if (pumpEntry != null) {
+            ColorStateList colorStateList = pumpEntry.getTextColors();
+            final int normalColor = colorStateList.getDefaultColor();
+            pumpEntry.setTextColor(normalColor);
+
+            if (value.doubleValue() < urgentThreshold) {
+                pumpEntry.setTextColor(MainApp.gc(R.color.low));
+            } else if (value.doubleValue() < warnThreshold) {
+                pumpEntry.setTextColor(MainApp.gc(R.color.high));
+            }
+
+            pumpEntry.setText(valueString);
+        }
+
+        return pumpEntry;
     }
 }
 

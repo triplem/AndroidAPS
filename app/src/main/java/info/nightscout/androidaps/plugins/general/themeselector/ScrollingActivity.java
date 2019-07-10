@@ -93,7 +93,7 @@ public class ScrollingActivity extends MainActivity implements View.OnClickListe
                        ScrollingActivity.this.recreate();
                        changeTheme(selectedTheme);
                     }
-                },400);
+                },500);
             }
         });
 

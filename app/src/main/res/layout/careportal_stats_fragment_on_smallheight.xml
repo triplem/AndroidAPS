@@ -62,7 +62,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/careportal_insulinage"
+                android:id="@+id/careportal_prLevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -134,7 +134,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/careportal_pbage"
+                android:id="@+id/careportal_pbLevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

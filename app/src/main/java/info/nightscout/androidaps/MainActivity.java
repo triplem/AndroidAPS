@@ -1,5 +1,6 @@
 package info.nightscout.androidaps;
 
+import android.app.Activity;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
@@ -69,6 +70,8 @@ import info.nightscout.androidaps.utils.PasswordProtection;
 import info.nightscout.androidaps.utils.SP;
 
 import static info.nightscout.androidaps.plugins.general.themeselector.util.ThemeUtil.THEME_BLUEGRAY;
+import static info.nightscout.androidaps.plugins.general.themeselector.util.ThemeUtil.THEME_DEEPORANGE;
+import static info.nightscout.androidaps.plugins.general.themeselector.util.ThemeUtil.THEME_PINK;
 
 public class MainActivity extends AppCompatActivity {
     private static Logger log = LoggerFactory.getLogger(L.CORE);
@@ -79,30 +82,31 @@ public class MainActivity extends AppCompatActivity {
 
     private MenuItem pluginPreferencesMenuItem;
 
-    public static int mTheme = THEME_BLUEGRAY;
+    public static int mTheme = THEME_PINK;
     public static boolean mIsNightMode = true;
 
     public void changeTheme(int newTheme){
         mTheme = newTheme;
         SP.putInt("theme", mTheme);
+        SP.putBoolean("daynight", mIsNightMode);
+
         if(mIsNightMode){
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else{
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         setTheme(mTheme);
-        recreate();
+
         TaskStackBuilder.create(this)
                 .addNextIntent(new Intent(this, MainActivity.class))
                 .addNextIntent(this.getIntent())
                 .startActivities();
+        recreate();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        int newtheme = SP.getInt("theme", THEME_BLUEGRAY);
+        int newtheme = SP.getInt("theme", THEME_PINK);
         mTheme = newtheme;
         boolean newMode = SP.getBoolean("daynight", mIsNightMode);
         mIsNightMode = newMode;
@@ -113,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         setTheme(ThemeUtil.getThemeId(newtheme));
+
+        super.onCreate(savedInstanceState);
 
         if (L.isEnabled(L.CORE))
             log.debug("onCreate");
@@ -254,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViews(boolean switchToLast) {
         TabPageAdapter pageAdapter = new TabPageAdapter(getSupportFragmentManager(), this);
         NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             return true;
         });
@@ -263,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
             pageAdapter.registerNewFragment(p);
             if (p.hasFragment()  && p.isEnabled(p.pluginDescription.getType()) && !p.pluginDescription.neverVisible) {
                 MenuItem menuItem = menu.add(p.getName());
+                menuItem.setIcon(R.drawable.ic_settings);
                 menuItem.setCheckable(true);
                 menuItem.setOnMenuItemClickListener(item -> {
                     Intent intent = new Intent(this, SingleFragmentActivity.class);
