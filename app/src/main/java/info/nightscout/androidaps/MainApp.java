@@ -129,6 +129,7 @@ public class MainApp extends Application {
 
     public static boolean devBranch;
     public static boolean engineeringMode;
+    public static boolean overwriteAdvancedFiltering;
 
     @Override
     public void onCreate() {
@@ -163,6 +164,9 @@ public class MainApp extends Application {
 
         engineeringMode = engineeringModeSemaphore.exists() && engineeringModeSemaphore.isFile();
         devBranch = BuildConfig.VERSION.contains("-") || BuildConfig.VERSION.matches(".*[a-zA-Z]+.*");
+
+        File overwriteAdvancedFilteringSemaphore = new File(extFilesDir, "overwrite_advanced_filtering");
+        overwriteAdvancedFiltering = overwriteAdvancedFilteringSemaphore.exists() && overwriteAdvancedFilteringSemaphore.isFile();
 
         sBus = L.isEnabled(L.EVENTS) && devBranch ? new LoggingBus(ThreadEnforcer.ANY) : new Bus(ThreadEnforcer.ANY);
 
