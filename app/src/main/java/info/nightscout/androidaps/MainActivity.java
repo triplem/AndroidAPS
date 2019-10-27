@@ -354,6 +354,8 @@ public class MainActivity extends NoSplashAppCompatActivity {
                 message += MainApp.gs(R.string.configbuilder_nightscoutversion_label) + " " + NSSettingsStatus.getInstance().nightscoutVersionName;
                 if (MainApp.engineeringMode)
                     message += "\n" + MainApp.gs(R.string.engineering_mode_enabled);
+                if (MainApp.overwriteAdvancedFiltering)
+                    message += "\n" + MainApp.gs(R.string.overwrite_xdrip_filtering);
                 message += MainApp.gs(R.string.about_link_urls);
                 final SpannableString messageSpanned = new SpannableString(message);
                 Linkify.addLinks(messageSpanned, Linkify.WEB_URLS);

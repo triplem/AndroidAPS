@@ -1615,4 +1615,5 @@
     <string name="common_on">On</string>
     <string name="common_off">Off</string>
 
+    <string name="overwrite_xdrip_filtering">Overwrite XDrip+ Filtering</string>
 </resources>
