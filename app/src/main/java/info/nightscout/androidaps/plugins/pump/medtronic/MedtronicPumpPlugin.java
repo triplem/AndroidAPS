@@ -766,7 +766,7 @@ public class MedtronicPumpPlugin extends PumpPluginAbstract implements PumpInter
 
                 if (clock.timeDifference == 0) {
                     Notification notification = new Notification(Notification.INSIGHT_DATE_TIME_UPDATED, MainApp.gs(R.string.pump_time_updated), Notification.INFO, 60);
-                    MainApp.bus().post(new EventNewNotification(notification));
+                    RxBus.INSTANCE.send(new EventNewNotification(notification));
                 }
             } else {
                 if ((clock.localDeviceTime.getYear() > 2015)) {
@@ -1080,7 +1080,7 @@ public class MedtronicPumpPlugin extends PumpPluginAbstract implements PumpInter
     private void finishAction(String overviewKey) {
 
         if (overviewKey != null)
-            MainApp.bus().post(new EventRefreshOverview(overviewKey));
+            RxBus.INSTANCE.send(new EventRefreshOverview(overviewKey));
 
         triggerUIChange();
 
@@ -1603,7 +1603,7 @@ public class MedtronicPumpPlugin extends PumpPluginAbstract implements PumpInter
     }
 
     private void refreshCustomActionsList() {
-        MainApp.bus().post(new EventCustomActionsChanged());
+        RxBus.INSTANCE.send(new EventCustomActionsChanged());
     }
 
 

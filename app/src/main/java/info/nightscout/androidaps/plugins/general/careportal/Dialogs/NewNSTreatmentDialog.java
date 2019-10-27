@@ -296,7 +296,7 @@ public class NewNSTreatmentDialog extends DialogFragment implements View.OnClick
         editSplit = (NumberPicker) view.findViewById(R.id.careportal_newnstreatment_splitinput);
         editSplit.setParams(100d, 0d, 100d, 5d, new DecimalFormat("0"), true, view.findViewById(R.id.ok));
         editDuration = (NumberPicker) view.findViewById(R.id.careportal_newnstreatment_durationinput);
-        editDuration.setParams(0d, 0d, 24 * 60d, 10d, new DecimalFormat("0"), false, view.findViewById(R.id.ok));
+        editDuration.setParams(0d, 0d, Constants.MAX_PROFILE_SWITCH_DURATION, 10d, new DecimalFormat("0"), false, view.findViewById(R.id.ok));
 
         TextWatcher percentTextWatcher = new TextWatcher() {
             @Override
@@ -741,6 +741,8 @@ public class NewNSTreatmentDialog extends DialogFragment implements View.OnClick
                 }
                 TreatmentsPlugin.getPlugin().addToHistoryTempTarget(tempTarget);
             }
+            if (duration == 10)
+                SP.putBoolean(R.string.key_objectiveusetemptarget, true);
         } else {
             if (JsonHelper.safeGetString(data, "eventType").equals(CareportalEvent.PROFILESWITCH)) {
                 ProfileSwitch profileSwitch = ProfileFunctions.prepareProfileSwitch(

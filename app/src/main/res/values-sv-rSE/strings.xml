@@ -5,7 +5,6 @@
     <!--   <string name="he_lang" translatable="false">Hebrew</string> -->
     <!--    <string name="ga_lang" translatable="false">Irish</string> -->
     <!--    <string name="ja_lang" translatable="false">Japanese</string> -->
-    <!--    <string name="pt_BR_lang" translatable="false">Portuguese, Brazilian</string> -->
     <string name="treatmentssafety_title">Säkerhetsbegränsningar för behandlingar</string>
     <string name="treatmentssafety_maxbolus_title">Max tillåten bolus [E]</string>
     <string name="treatmentssafety_maxcarbs_title">Max tillåtna KH [g]</string>
@@ -34,7 +33,7 @@
     <string name="description_smb">Den senaste algoritmen för avancerade användare</string>
     <string name="description_overview">Visar loopens nuvarande tillstånd och knappar för de vanligaste funktionerna</string>
     <string name="description_persistent_notification">Visar en konstant avisering med en kort sammanfattning av vad din loop gör</string>
-    <string name="description_profile_local">Definiera en basalprofil som är tillgänglig offline.</string>
+    <string name="description_profile_local">Definiera en profil som är tillgänglig offline.</string>
     <string name="description_profile_nightscout">Använder profiler från Nightscout</string>
     <string name="description_profile_simple">Definiera en insulinprofil som bara har ett enda tidsblock.</string>
     <string name="description_pump_combo">Pumpintegration för Accu-Chek Combo. Kräver att Ruffy är installerat</string>
@@ -42,15 +41,12 @@
     <string name="description_pump_dana_r_korean">Pumpintegration för DANA Diabecare R, koreansk version</string>
     <string name="description_pump_dana_r_v2">Pumpintegration för DANA Diabecare R med uppgraderad firmware</string>
     <string name="description_pump_dana_rs">Pumpintegration för DANA Diabecare RS</string>
-    <string name="description_pump_insight">Pumpintegration för Accu-Chek Insight. Kräver att SightRemote är installerat</string>
     <string name="description_pump_mdi">Integration för de som endast använder insulinpennor</string>
     <string name="description_pump_virtual">Integration för pumpar som ännu inte stöds av AndroidAPS (Open loop)</string>
     <string name="description_sensitivity_aaps">Känsligheten beräknas på samma sätt som i Oref0, men du kan specificera hur mycket av historiken som ska tas med i beräkningen. Minimalt upptag av kolhydrater beräknas utifrån maximal upptagstid för kolhydrater som angetts i Inställningar.</string>
     <string name="description_sensitivity_oref0">Känsligheten beräknas från 24 timmars data från historiken och kolhydrater som inte redan tagits upp, ignoreras efter tiden som ställts in i inställningarna.</string>
     <string name="description_sensitivity_oref1">Känsligheten beräknas från 8 timmars data från historiken och kolhydrater som ännu inte tagits upp ignoreras efter tiden som ställts in i inställningarna. Insticksprogrammet beräknar också icke inmatade måltider, UAM.</string>
     <string name="description_sensitivity_weighted_average">Känsligheten beräknas som ett viktat medelvärde av avvikelserna. Senare avvikelser får en högre vikt. Minimal upptagning av kolhydrater beräknas utifrån maximal upptagstid för kolhydrater som angetts i inställningarna. Den här algoritmen är den snabbaste att justera förändringar i känsligheten.</string>
-    <string name="description_source_dexcom_g5">Ta emot BG-data från den modifierade Dexcom G5-appen</string>
-    <string name="description_source_dexcom_g6">Ta emot BG-data från den modifierade Dexcom G6-appen.</string>
     <string name="description_source_eversense">Ta emot BG-data från den modifierade
 Eversense-appen.</string>
     <string name="description_source_glimp">Ta emot BG-data från Glimp</string>
@@ -61,9 +57,6 @@ Eversense-appen.</string>
     <string name="description_wear">Följ och kontrollera din AndroidAPS med din WearOS-klocka</string>
     <string name="description_xdrip_status_line">Visa AAPS-information på din xDrip-urtavla</string>
     <string name="description_sms_communicator">Fjärrstyr AndroidAPS med SMS-kommandon.</string>
-    <string name="objectives_button_back">Backa</string>
-    <string name="objectives_button_start">Starta</string>
-    <string name="objectives_button_verify">Godkänn</string>
     <string name="nsprofileview_units_label">Enheter</string>
     <string name="nsprofileview_dia_label">DIA</string>
     <string name="nsprofileview_ic_label">IC</string>
@@ -75,14 +68,13 @@ Eversense-appen.</string>
     <string name="treatments_carbs_label_string">KH:</string>
     <string name="treatments_iob_label_string">IOB:</string>
     <string name="sms_iob">IOB:</string>
-    <string name="treatments_activity_string">Aktivitet:</string>
-    <string name="treatments_iobtotal_label_string">Total IOB (bolus):</string>
-    <string name="treatments_iobactivitytotal_label_string">Total aktivitet (5m):</string>
+    <string name="treatments_iobtotal_label_string">IOB fr bolus:</string>
+    <string name="treatments_iobactivitytotal_label_string">Insulinaktivitet (5m):</string>
     <string name="tempbasals_realduration_label_string">Dur:</string>
     <string name="tempbasals_netratio_label_string">Tot:</string>
     <string name="tempbasals_netinsulin_label_string">Ins:</string>
     <string name="tempbasals_iob_label_string">IOB:</string>
-    <string name="tempbasals_iobtotal_label_string">Total IOB (basal):</string>
+    <string name="tempbasals_iobtotal_label_string">IOB fr basal:</string>
     <string name="treatments_newtreatment_insulinamount_label">Insulin</string>
     <string name="treatments_newtreatment_carbsamount_label">KH</string>
     <string name="treatments_wizard_bg_label">BG</string>
@@ -91,7 +83,7 @@ Eversense-appen.</string>
     <string name="treatments_wizard_correction_label">Korr</string>
     <string name="insulin_unit_shortname">E</string>
     <string name="treatments_wizard_bolusiob_label">Bolus IOB</string>
-    <string name="openapsma_run">Beräkna nu</string>
+    <string name="openapsma_run">Utför nu</string>
     <string name="vitualpump_label">Virtuell pump</string>
     <string name="pump_basebasalrate_label">Profilens basaldos</string>
     <string name="pump_tempbasal_label">Temp basal</string>
@@ -107,6 +99,7 @@ Eversense-appen.</string>
     <string name="openapsma_profile_label">Profil</string>
     <string name="openapsma_mealdata_label">Måltidsdata</string>
     <string name="result">Resultat</string>
+    <string name="result_insulin_carbs">Resultat: %1$s %2$s</string>
     <string name="openapsma_noglucosedata">Ingen BG-data tillänglig</string>
     <string name="nochangerequested">Ingen ändring behövs</string>
     <string name="openapsma_request_label">Beräknat behov</string>
@@ -148,7 +141,6 @@ Eversense-appen.</string>
     <string name="openapsma_lastenact_label">Senaste justering</string>
     <string name="ok">OK</string>
     <string name="cancel">Avbryt</string>
-    <string name="close">Stäng</string>
     <string name="noapsselected">INGEN APS VALD</string>
     <string name="safety">Säkerhet</string>
     <string name="openapsma_disabled">Insticksprogram avaktiverat</string>
@@ -183,9 +175,6 @@ Eversense-appen.</string>
     <string name="unsupportedclientver">Versionen av NSClient stöds inte</string>
     <string name="unsupportednsversion">Versionen av Nightscout stöds inte</string>
     <string name="nsclientnotinstalled">NSClient är inte installerad. Data förlorad!</string>
-    <string name="objectives_bgavailableinns">BG är tillängligt i Nightscout</string>
-    <string name="objectives_pumpstatusavailableinns">Pumpstatus tillgängligt i Nightscout</string>
-    <string name="objectives_manualenacts">Manuella justeringar</string>
     <string name="loopdisabled">LOOP STOPPAD PGA BEGRÄNSNINGAR</string>
     <string name="treatments_wizard_basaliob_label">IOB från basal</string>
     <string name="bolusconstraintapplied">Bolusspärr aktiverad</string>
@@ -228,7 +217,7 @@ Eversense-appen.</string>
     <string name="overview_tempbasal_button">Temp basal</string>
     <string name="overview_extendedbolus_button">Förlängd bolus</string>
     <string name="configbuilder_nightscoutversion_label">Nightscoutversion:</string>
-    <string name="missing">Saknas:</string>
+    <string name="missing_carbs">Saknar %1$dg</string>
     <string name="exported">Inställningar exporterade</string>
     <string name="export_to">Exportera inställningar till</string>
     <string name="import_from">Importera inställningar från</string>
@@ -323,21 +312,6 @@ Eversense-appen.</string>
     <string name="overview_bolusprogress_stoppressed">Stopp nedtryckt</string>
     <string name="waitingforpump">Väntar på pump</string>
     <string name="overview_bolusprogress_goingtodeliver">Kommer att leverera %1$.2f enheter</string>
-    <string name="objectives_0_objective">Ställer in utseende och övervakning för att sedan kunna analysera basaler och kvoter</string>
-    <string name="objectives_0_gate">Kontrollera att BG syns i Nightscout och att insulindata från pumpen laddas upp</string>
-    <string name="objectives_1_objective">Starta med open loop</string>
-    <string name="objectives_1_gate">Starta med open loop och använd det några dagar. Försök att ge många föreslagna temp basaler. Sätt upp och använd standardmålvärden (Träning, Äta snart och Hypo)</string>
-    <string name="objectives_2_objective">Förstå din open loop och hur den föreslår temp basaler</string>
-    <string name="objectives_2_gate">Utifrån vad du nu lärt dig, besluta vilken max basal du vill ha. Ställ in det både i inställningarna i APS och i din pump</string>
-    <string name="objectives_3_objective">Börja använda closed loop med aktiverad funktion att stänga av vid lågt BG</string>
-    <string name="objectives_3_gate">Aktivera closed loop med max IOB=0 i några dagar till dess systemet inte stänger av pga lågt BG för många gånger</string>
-    <string name="objectives_4_objective">Finjustering av closed loop, gradvis ökande IOB och minskande målvärde för BG</string>
-    <string name="objectives_4_gate">Kör några dagar och åtminstone en natt utan larm för lågt BG innan du sänker målvärdet för BG.</string>
-    <string name="objectives_5_objective">Justera basaler och kvoter om det behövs. Aktivera sedan autosens</string>
-    <string name="objectives_5_gate">1 veckas lyckad looping dagtid, där alla måltider lagts in</string>
-    <string name="objectives_6_objective">Aktiverar extra funktioner som kan användas dagtid, såsom avancerad måltidsassistans, AMA</string>
-    <string name="objectives_7_objective">Aktiverar ytterligare funktioner för användning dagtid, t ex SMB</string>
-    <string name="objectives_7_gate">Du måste läsa på wikin och öka max IOB för att få SMB att fungera bra. En bra start är att sätta max IOB till din genomsnittliga måltidsbolus plus 3 gånger den högsta basalen du har under ett dygn</string>
     <string name="youareonallowedlimit">Du har nått din tillåtna gräns</string>
     <string name="noprofileselected">Ingen profil vald</string>
     <string name="smscommunicator_loophasbeendisabled">Loop stängdes av</string>
@@ -418,7 +392,7 @@ Eversense-appen.</string>
     <string name="MM640g">Minimed 640G</string>
     <string name="ongoingnotificaction">Konstant avisering i telefonen</string>
     <string name="old_data">Aktuellt BG saknas!</string>
-    <string name="minago">%1$d min sedan</string>
+    <string name="minago">%1$d&#160;min sedan</string>
     <string name="sms_minago">%1$d min sedan</string>
     <string name="localprofile">Lokal profil</string>
     <string name="openapsama">OpenAPS AMA</string>
@@ -571,11 +545,12 @@ Eversense-appen.</string>
     <string name="enablesuperbolus">Aktivera superbolus i kalkylatorn</string>
     <string name="enablesuperbolus_summary">Aktiverar superbolusfunktionen i kalkylatorn. Aktivera inte innan du förstått hur den fungerar. DEN KAN ORSAKA ÖVERDOSERING AV INSULIN OM INSIKT SAKNAS OM FUNKTIONEN!</string>
     <string name="show_statuslights">Visa statusindikationer på hemskärmen</string>
-    <string name="show_statuslights_summary">Aktivera statusindikationerna för cage, iage, sage, reservoar och batterinivå på hemskärmen.</string>
+    <string name="show_statuslights_extended">Visa statusindikatorer på hemskärmen</string>
+    <string name="show_statuslights_extended_summary">Aktivera statusindikatorerna för cage, iage, sage, reservoar och batterinivå på hemskärmen.</string>
     <string name="statuslights_res_warning">Varningsnivå för reservoar [U]</string>
     <string name="statuslights_res_critical">Akut varningsnivå för reservoar [U]</string>
-    <string name="statuslights_bat_warning">Varningsnivå för batteri [%%]</string>
-    <string name="statuslights_bat_critical">Akut varningsnivå för batteri [%%]</string>
+    <string name="statuslights_bat_warning">Varningsnivå för batteri [%]</string>
+    <string name="statuslights_bat_critical">Akut varningsnivå för batteri [%]</string>
     <string name="iob">IOB</string>
     <string name="cob">COB</string>
     <string name="virtualpump_firmware_label">Firmwareversion</string>
@@ -616,7 +591,7 @@ Eversense-appen.</string>
     <string name="nsalarm_urgent_staledatavalue_label">Akut varning efter [min]</string>
     <string name="openapsama_autosens_period">Intervall för autosens [tim]</string>
     <string name="openapsama_autosens_period_summary">Antal timmar för beräkning av känslighet (absorptionstid för KH är exkluderad)</string>
-    <string name="pump">P</string>
+    <string name="pump">Pump</string>
     <string name="openaps">OpenAPS</string>
     <string name="uploader">Uppladdare</string>
     <string name="configbuilder_sensitivity">Känslighetsavkänning</string>
@@ -632,7 +607,7 @@ Eversense-appen.</string>
     <string name="careportal_sensorage_label_short">SAGE</string>
     <string name="careportal_insulinage_label_short">IAGE</string>
     <string name="careportal_canulaage_label_short">CAGE</string>
-    <string name="careportal_pbage_label_short">PBAGE</string>
+    <string name="careportal_pbage_label_short">BAGE</string>
     <string name="openaps_short">APS</string>
     <string name="uploader_short">Upld batt</string>
     <string name="basal_short">BAS</string>
@@ -645,7 +620,7 @@ Eversense-appen.</string>
     <string name="mdtp_cancel">Avbryt</string>
     <string name="notloadedplugins">Alla profiler laddades inte!</string>
     <string name="valuesnotstored">Alla värden sparades inte!</string>
-    <string name="ns_localbroadcasts">Slå på sändning av data till alla appar i telefonen (ex xDrip).</string>
+    <string name="ns_localbroadcasts">Aktivera sändning till andra appar (som xDrip). Aktivera inte detta om du har fler än en förekomst av AAPS eller NSClient installerad.</string>
     <string name="ns_localbroadcasts_title">Aktivera lokala broadcasts</string>
     <string name="careportal_activity_label">TRÄNING &amp; BG-MÅL</string>
     <string name="careportal_carbsandbolus_label">KOLHYDRATER &amp; BOLUS</string>
@@ -729,8 +704,6 @@ Eversense-appen.</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="btwatchdog_title">Bluetooth-övervakare</string>
     <string name="btwatchdog_summary">Startar om bluetooth på telefonen om anslutning till pumpen misslyckas. Detta hjälper på en del telefoner där bluetooth ibland hänger sig.</string>
-    <string name="DexcomG5">DexcomG5 App (modifierad)</string>
-    <string name="DexcomG6">Dexcom G6 App (modifierad)</string>
     <string name="eversense">Eversense App (modifierad)</string>
     <string name="dexcomg5_nsupload_title">Ladda upp BG-data till Nightscout</string>
     <string name="bgsource_upload">Uppladdningsinställningar för BG</string>
@@ -800,50 +773,8 @@ Eversense-appen.</string>
     <string name="combo_reservoir_level_insufficient_for_bolus">Inte tillräckligt med insulin i reservoaren för att ge bolus</string>
     <string name="extendedbolusdeliveryerror">Förlängd bolus misslyckad</string>
     <string name="insightpump_shortname">Sight</string>
-    <string name="insightpump">Insight-pump</string>
-    <string name="status_no_colon">Status</string>
-    <string name="changed">Ändrad</string>
-    <string name="pump_stopped_uppercase">PUMP STOPPAD</string>
-    <string name="status_updated">Status uppdaterad</string>
     <string name="ago">sedan</string>
-    <string name="with">med</string>
-    <string name="insight_active_tbr">Aktiv temp basal</string>
-    <string name="insight_min_left">min kvar</string>
-    <string name="log_book">Loggbok</string>
-    <string name="insight_last_completed_action">Senast utförda åtgärd</string>
-    <string name="insight_min">min</string>
-    <string name="insight_remaining_over">återstår över</string>
-    <string name="insight_total_with">total med</string>
-    <string name="insight_upfront_with">direkt med</string>
-    <string name="insight_stay_always_connected">Håll alltid ansluten</string>
-    <string name="insight_history_idle">REDO</string>
-    <string name="insight_history_syncing">SYNKRONISERAR</string>
-    <string name="insight_history_busy">UPPTAGEN</string>
-    <string name="insight_history_synced">SYNKRONISERAD</string>
-    <string name="insight_startup_uppercase">STARTAR</string>
-    <string name="insight_needs">behöver</string>
-    <string name="insight_not_connected_to_companion_app">Inte ansluten till hjälp-app!</string>
-    <string name="insight_companion_app_not_installed">Hjälp-app verkar inte vara installerad!</string>
-    <string name="insight_incompatible_compantion_app_we_need_version">Inkompatibel hjälp-app. Vi behöver version</string>
-    <string name="insight_unknown">Okänd</string>
-    <string name="insight_waiting_for_code">Inväntar kodverifiering</string>
-    <string name="insight_code_rejected">Kod ej godkänd</string>
-    <string name="insight_app_binding">Appbindning</string>
-    <string name="insight_not_authorized">Ej godkänd</string>
-    <string name="insight_incompatible">Inkompatibel</string>
-    <string name="second">sek</string>
-    <string name="minute">min</string>
     <string name="format_hours">%1$.2f h</string>
-    <string name="hour">tim</string>
-    <string name="day">dag</string>
-    <string name="week">vecka</string>
-    <string name="time_plural">s</string>
-    <string name="insight_keepalive_format_string">%1$ds går ut %2$s</string>
-    <string name="insight_keep_alive_status">Keepalive-status</string>
-    <string name="statistics">Statistik</string>
-    <string name="connect_preemptively">Anslut på förhand</string>
-    <string name="automatically_connect_when">Anslut automatiskt när AndroidAPS är öppet, innan något pumpkommando är skickat, för att snabba upp kommunikationen</string>
-    <string name="not_recommended_due_to_battery_drain">Rekommenderas inte, då det drar mycket batteri</string>
     <string name="enablesmbalways">Använd alltid SMB</string>
     <string name="enablesmbalways_summary">Använd alltid SMB oberoende av bolus. Endast möjligt med en bra filtrerad BG-källa, t ex Dexcom G5.</string>
     <string name="enablesmbaftercarbs">Använd SMB efter kolhydrater</string>
@@ -886,7 +817,7 @@ Eversense-appen.</string>
     <string name="bolusrecordedonly">Bolusen sparas bara i loggboken</string>
     <string name="ns_autobackfill_summary">Hämta saknad BG-data från Nightscout</string>
     <string name="loop_smbsetbypump_label">SMB satt i pump</string>
-    <string name="overview_show_activity">Aktivitet</string>
+    <string name="overview_show_activity">Insulinaktivitet (5m)</string>
     <string name="overview_show_sensitivity">Känslighet (Sens)</string>
     <string name="overview_show_deviations">Avvikelser (Dev)</string>
     <string name="overview_show_cob">Aktiva KH (COB)</string>
@@ -913,8 +844,6 @@ Eversense-appen.</string>
     <string name="profileswitch_ismissing">Profilbyte saknas. Vänligen gör ett profilbyte eller tryck Aktivera profil under Lokal Profil.</string>
     <string name="combo_bolus_count">Antal bolus</string>
     <string name="combo_tbr_count">Antal temp basaler</string>
-    <string name="objectivenotstarted">Mål %1$d inte startat</string>
-    <string name="objectivenotfinished">Mål %1$d inte uppnått</string>
     <string name="pumpisnottempbasalcapable">Pumpen kan inte hantera temp basaler</string>
     <string name="novalidbasalrate">Ingen giltig data om temp basaler fanns i pumpen</string>
     <string name="closedmodedisabledinpreferences">Closed Loop inaktiverat i Inställningar</string>
@@ -947,9 +876,7 @@ Eversense-appen.</string>
     <string name="reset">Återställ</string>
     <string name="waitingfortimesynchronization">Väntar på tidssynkronisering (%1$d sek)</string>
     <string name="loopdisconnectedfor">Frånkopplad (%1$d min)</string>
-    <string name="automatic_careportal_events">Automatisk loggning i Careportal</string>
-    <string name="automatically_upload_insulin_cannula_and_battery_changes_to_nightscout">Ladda upp insulin-, kanyl- och batteribyten samt pumplarm till Nightscout</string>
-    <string name="openapssmb_maxiob_title">Max IOB som OpenAPS inte kan överstiga [E]</string>
+    <string name="openapssmb_maxiob_title">Max IOB som OpenAPS inte kan överstiga [U]</string>
     <string name="openapssmb_maxiob_summary">Det här värdet kallas Max IOB av OpenAPS. Om denna mängd insulin on board (IOB) nås, kan inte OpenAPS lägga till mer.</string>
     <string name="pump_stopped">Pump stoppad</string>
     <string name="pump_started">Pump startad</string>
@@ -999,7 +926,6 @@ Eversense-appen.</string>
     <string name="adjustprofileinns">Ändringar måste göras i NS</string>
     <string name="exitwizard">Hoppa över installationsguiden</string>
     <string name="setupwizard_loop_description">Tryck på knappen nedan för att låta AndroidAPS föreslå/göra basalförändringar</string>
-    <string name="enableobjectives">Aktivera mål</string>
     <string name="apssetup">Konfigurera APS-insticksprogram </string>
     <string name="sensitivitysetup">Konfigurera insticksprogram för känslighet</string>
     <string name="setupwizard_sensitivity_description">Insticksprogrammet för känslighet används för att detektera insulinkänslighet och för att beräkning av aktiva kolhydrater, COB. För mer information, besök:</string>
@@ -1039,7 +965,6 @@ Eversense-appen.</string>
     <string name="completed_well_done">Klart. Bra jobbat!</string>
     <string name="not_completed_yet">Inte slutfört ännu</string>
     <string name="time_elapsed">Förfluten tid</string>
-    <string name="nth_objective">%1$d. Mål</string>
     <string name="poctech">Poctech</string>
     <string name="description_source_poctech">Ta emot BG-data från Poctechappen</string>
     <string name="description_source_tomato">Ta emot BG-data från tomato app (MiaoMiao-enhet)</string>
@@ -1057,7 +982,6 @@ Eversense-appen.</string>
     <string name="error_adding_treatment_title">Behandlingsdata ofullständigt</string>
     <string name="maintenance_settings">Underhållsinställningar</string>
     <string name="maintenance_email">e-post</string>
-    <string name="invalid_email_message">Ogiltig e-postadress</string>
     <string name="maintenance_amount">Antal loggar att skicka</string>
     <string name="maintenance">Underhåll</string>
     <string name="maintenance_shortname">UH</string>
@@ -1119,7 +1043,6 @@ Eversense-appen.</string>
     <string name="manufacturing_date">Tillverkningsdatum</string>
     <string name="delete_pairing">Ta bort parkoppling</string>
     <string name="pairing_information">Parkopplingsinformation</string>
-    <string name="refreh_status">Uppdatera status</string>
     <string name="start_pump">Starta pumpen</string>
     <string name="stop_pump">Stoppa pumpen</string>
     <string name="operating_mode">Driftläge</string>
@@ -1252,7 +1175,7 @@ Eversense-appen.</string>
     <string name="very_old_version">väldigt gammal version</string>
     <string name="new_version_warning">Ny version tillgänglig sedan %1$d dagar! Systemet kommer att byta läge till \"stopp innan lågt\" efter 60 dagar och sluta loopa helt efter 90 dagar</string>
     <string name="twohours">2 tim</string>
-    <string name="formatinsulinunits">%1$.2f enheter</string>
+    <string name="formatinsulinunits">%1$.2f U</string>
     <string name="dexcom_app_patched">Dexcoms app (modifierad)</string>
     <string name="dexcom_short">DXCM</string>
     <string name="description_source_dexcom">Ta emot BG-data från den modifierade Dexcom-appen.</string>
@@ -1284,12 +1207,9 @@ Eversense-appen.</string>
     <string name="triggercoblabel">COB</string>
     <string name="cobcompared">COB %1$s %2$.0f</string>
     <string name="taskname">Åtgärdsnamn</string>
-    <string name="eventname">Händelsenamn</string>
     <string name="edit_short">ÄNDRA</string>
     <string name="please_choose_an_action_type">Vänligen välj åtgärdstyp:</string>
     <string name="please_choose_a_trigger_type">Vänligen välj typ av utlösare:</string>
-    <string name="if_label">Om:</string>
-    <string name="then_label">Gör:</string>
     <string name="triggers">Utlösare:</string>
     <string name="remove_label">TA BORT</string>
     <string name="preconditions">Förutsättningar:</string>
@@ -1310,7 +1230,6 @@ Eversense-appen.</string>
     <string name="medtronic_pump_frequency_worldwide">Resten av världen (868 MHz)</string>
     <string name="medtronic_pump_encoding_4b6b_local">4b6b Mjukvarukodning</string>
     <string name="medtronic_pump_encoding_4b6b_rileylink">4b6b Hårdvarukodning</string>
-    <string name="rileylink_mac_address">Riley Link MAC-adress</string>
     <string name="medtronic_custom_action_wake_and_tune">Väck och finjustera frekvens</string>
     <string name="medtronic_custom_action_clear_bolus_block">Ta bort bolusblockering</string>
     <string name="medtronic_custom_action_reset_rileylink">Återställ Riley Link-konfiguration</string>
@@ -1322,9 +1241,7 @@ Eversense-appen.</string>
     <string name="rileylink_scanner_scan_scan">SÖK</string>
     <string name="rileylink_scanner_scan_stop">AVBRYT</string>
     <string name="rileylink_scanner_selected_device">Vald</string>
-    <string name="rileylink_scanner_scan">Sök</string>
     <string name="rileylink_scanner_title">Riley Link-sökning</string>
-    <string name="rileylink_scanner_scan_menu">Sök efter Riley Link</string>
     <string name="rileylink_scanner_ble_not_supported">Enheten stöder inte BLE.</string>
     <string name="rileylink_scanner_ble_not_enabled">Bluetooth avstängt.</string>
     <string name="location_not_found_title">Platsdata är inte aktiverat</string>
@@ -1337,10 +1254,8 @@ Eversense-appen.</string>
     <!-- RL Status Page -->
     <string name="rileylink_settings_tab1">Inställningar</string>
     <string name="rileylink_settings_tab2">Historik</string>
-    <string name="rileylink_settings_tab3">Enhet</string>
     <string name="rileylink_status">Riley Link Status</string>
     <string name="medtronic_pump_status">Pumpstatus</string>
-    <string name="rileylink_settings_title">Inställningar för Riley Link</string>
     <string name="title_activity_rileylink_settings">Inställningar för Riley Link</string>
     <string name="rileylink_title">Riley Link</string>
     <string name="rileylink_configured_address">Konfigurerad adress</string>
@@ -1405,7 +1320,6 @@ Eversense-appen.</string>
     <string name="medtronic_pump_status_waking_up">Väcker</string>
     <string name="medtronic_pump_status_error_comm">Kommunikationsfel</string>
     <string name="medtronic_pump_status_timeout_comm">Kommunikationstimeout</string>
-    <string name="medtronic_pump_status_problem_contacting">Problem att ansluta till pumpen</string>
     <string name="medtronic_pump_status_pump_unreachable">Pumpen kan inte nås</string>
     <string name="medtronic_pump_status_invalid_config">Felaktig konfigureration</string>
     <string name="medtronic_pump_status_active">Aktiv</string>
@@ -1423,7 +1337,6 @@ Eversense-appen.</string>
     <string name="medtronic_cmd_basal_profile_not_set_is_same">Basalprofilen är samma som nuvarande. Ingen ändring gjord.</string>
     <string name="medtronic_cmd_desc_get_history">Hämta historik - Sida %1$d (%2$d/16)</string>
     <string name="medtronic_cmd_desc_get_history_request">Hämta historik - Sida %1$d</string>
-    <string name="medtronic_cmd_desc_get_history_base">Hämta historik - Sida %1$d</string>
     <string name="medtronic_cmd_desc_get_time">Hämta tid och datum från pumpen</string>
     <string name="medtronic_cmd_desc_get_settings">Hämta inställningar</string>
     <string name="medtronic_cmd_desc_get_model">Hämta pumpmodell</string>
@@ -1432,23 +1345,33 @@ Eversense-appen.</string>
     <string name="medtronic_cmd_desc_get_tbr">Hämta temp basal</string>
     <string name="medtronic_cmd_desc_set_tbr">Sätt temp basal</string>
     <string name="medtronic_cmd_desc_set_bolus">Leverera bolus</string>
-    <string name="pump_no_connection_h">Ingen anslutning på %1$d tim %2$d min</string>
-    <string name="pump_no_connection_d">Ingen anslutning på %1$d d %2$d tim</string>
-    <string name="insulinFromCob"><![CDATA[COB insulin: <font color=\'%1$s\'>%2$.1fg %3$.2fU</font>]]></string>
+    <string name="profilename">Byt profil till</string>
+    <string name="changengetoprofilename">Byt profil till %1$s</string>
+    <string name="automation_trigger_pump_last_connection_label">Senaste anslutning till pump</string>
+    <string name="automation_trigger_pump_last_connection_description">Senaste anslutning till pump [min sedan]</string>
+    <string name="automation_trigger_pump_last_connection_compared">Senaste anslutning till pump %1$s %2$s min sedan</string>
+    <string name="sendsmsactionlabel">Skicka SMS: %1$s</string>
+    <string name="sendsmsactiondescription">Skicka SMS till alla nummer i inställningar</string>
+    <string name="sendsmsactiontext">Skicka SMS med text</string>
+    <string name="insulinFromCob"><![CDATA[COB vs IOB: <font color=\'%1$s\'>%2$+.2fU</font>]]></string>
     <string name="bolusconstraintappliedwarning"><![CDATA[<font color=\'%1$s\'>Bolusbegränsning: %2$.2fU till %3$.2fU</font>]]></string>
-    <string name="slowabsorptiondetected"><![CDATA[<font color=\'%1$s\'>Varning! Långsam KH-absorption upptäckt %2$d%% av tiden. Dubbelkolla din beräkning. COB kan vara väldigt missvisande!</font>]]></string>
+    <string name="slowabsorptiondetected"><![CDATA[<font color=\'%1$s\'>Varning! Långsam KH-absorption upptäckt %2$d%% av tiden. Dubbelkolla din beräkning. COB kan vara väldigt missvisande och du riskerar få för mycket insulin!</font>]]></string>
     <string name="reservoirvalue">%1$.0f / %2$d U</string>
+    <string name="partialboluswizard">Direkt bolus [%]</string>
+    <string name="deliverpartofboluswizard">Bolusguiden utför beräkningar, men endast denna del av beräknat insulin levereras. Användbar med SMB-algoritm.</string>
     <string name="loading">Laddar...</string>
-    <plurals name="objective_days">
-        <item quantity="one">%1$d dag</item>
-        <item quantity="other">%1$d dagar</item>
-    </plurals>
-    <plurals name="objective_hours">
-        <item quantity="one">%1$d timme</item>
-        <item quantity="other">%1$d timmar</item>
-    </plurals>
-    <plurals name="objective_minutes">
-        <item quantity="one">%1$d min</item>
-        <item quantity="other">%1$d min</item>
-    </plurals>
+    <string name="snooze">Snooze</string>
+    <string name="time_range">Tidsintervall</string>
+    <string name="timerange_value">Klockan är mellan %1$s och %2$s</string>
+    <string name="between">Mellan </string>
+    <string name="close">Stäng</string>
+    <string name="increasingmaxbasal">Ökar maximalt basaldos eftersom inställningen är lägre än din maximala basal i profilen</string>
+    <string name="smscommunicator_messagebody">Ogiltigt innehåll i meddelande</string>
+    <string name="format_bg_isf">%1$s ISF: %2$.1f</string>
+    <string name="format_carbs_ic">%1$.0fg IC: %2$.1f</string>
+    <string name="format_cob_ic">%1$.1fg IC: %2$.1f</string>
+    <string name="format_percent">%1$d%%</string>
+    <string name="boluswizard">Kalkylator</string>
+    <string name="unit_minute_short">min</string>
+    <string name="format_carbs">%1$dg</string>
 </resources>
