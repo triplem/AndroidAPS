@@ -7,6 +7,22 @@
             android:name=".activities.RequestDexcomPermissionActivity"
             android:exported="false" />
 
+        <!-- For supported versions through Android 13, create an activity to show the rationale
+             of Health Connect permissions once users click the privacy policy link. -->
+        <activity
+            android:name=".activities.HealthPrivacyActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity>
+
     </application>
+
+    <!-- Check if Health Connect is installed -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+
 
 </manifest>
