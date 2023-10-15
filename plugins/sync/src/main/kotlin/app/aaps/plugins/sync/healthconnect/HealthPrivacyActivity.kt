@@ -1,4 +1,4 @@
-package app.aaps.plugins.source.activities
+package app.aaps.plugins.sync.healthconnect
 
 import android.os.Bundle
 import android.view.View

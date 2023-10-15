@@ -1,17 +1,15 @@
-package app.aaps.plugins.source
+package app.aaps.plugins.sync.healthconnect
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.BloodGlucoseRecord
 import androidx.health.connect.client.records.BloodGlucoseRecord.Companion.RELATION_TO_MEAL_UNKNOWN
 import androidx.health.connect.client.records.BloodGlucoseRecord.Companion.SPECIMEN_SOURCE_INTERSTITIAL_FLUID
 import androidx.health.connect.client.records.MealType
 import androidx.health.connect.client.records.StepsRecord
-import androidx.health.connect.client.records.metadata.Metadata
 import androidx.health.connect.client.units.BloodGlucose
 import androidx.work.WorkerParameters
 import app.aaps.core.interfaces.configuration.Config
@@ -24,6 +22,7 @@ import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.source.HeatlhConnectSource
+import app.aaps.core.interfaces.sync.Sync
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.main.utils.worker.LoggingWorker
 import app.aaps.core.utils.receivers.DataWorkerStorage
@@ -56,7 +55,7 @@ class HealthConnectPlugin @Inject constructor(
         .shortName(R.string.dexcom_short)
         .description(R.string.description_source_dexcom),
     aapsLogger, rh, injector
-), HeatlhConnectSource {
+), Sync, HeatlhConnectSource {
 
     lateinit var healthConnectClient: HealthConnectClient
 
