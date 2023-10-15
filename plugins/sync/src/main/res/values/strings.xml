@@ -182,4 +182,10 @@
     <string name="data_broadcaster">Data Broadcaster</string>
     <string name="data_broadcaster_description" translatable="false">Broadcast data to other apps like Garmin watch</string>
 
+    <!-- Health Connect -->
+    <string name="health_connect">Health Connect</string>
+    <string name="health_connect_short_name">HC</string>
+    <string name="description_health_connect">Synchronizes your data with Health Connect</string>
+
+
 </resources>

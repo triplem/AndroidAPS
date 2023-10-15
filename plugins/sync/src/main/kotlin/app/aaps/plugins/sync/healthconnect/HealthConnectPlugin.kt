@@ -12,6 +12,7 @@ import androidx.health.connect.client.records.MealType
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.units.BloodGlucose
 import androidx.work.WorkerParameters
+import androidx.health.connect.client.records.metadata.Metadata
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.UserEntryLogger
@@ -28,6 +29,8 @@ import app.aaps.core.main.utils.worker.LoggingWorker
 import app.aaps.core.utils.receivers.DataWorkerStorage
 import app.aaps.database.entities.GlucoseValue
 import app.aaps.database.impl.AppRepository
+import app.aaps.plugins.sync.R
+
 import dagger.android.HasAndroidInjector
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,12 +51,12 @@ class HealthConnectPlugin @Inject constructor(
 ) : PluginBase(
     PluginDescription()
         .mainType(PluginType.BGSOURCE)
-        .fragmentClass(BGSourceFragment::class.java.name)
-        .pluginIcon(app.aaps.core.main.R.drawable.ic_dexcom_g6)
-        .preferencesId(R.xml.pref_dexcom)
-        .pluginName(R.string.dexcom_app_patched)
-        .shortName(R.string.dexcom_short)
-        .description(R.string.description_source_dexcom),
+        .fragmentClass(HealthConnectFragment::class.java.name)
+        .pluginIcon(app.aaps.core.ui.R.drawable.ic_health_connect_logo)
+        .pluginName(R.string.health_connect)
+        .shortName(R.string.health_connect_short_name)
+        .preferencesId(R.xml.pref_health_connect)
+        .description(R.string.description_health_connect),
     aapsLogger, rh, injector
 ), Sync, HeatlhConnectSource {
 
@@ -122,7 +125,7 @@ class HealthConnectPlugin @Inject constructor(
         healthConnectClient = HealthConnectClient.getOrCreate(context)
     }
 
-    fun sendGlucose(bgValue: GlucoseValue) {
+    suspend fun sendGlucose(bgValue: GlucoseValue) {
         val bgRecord = BloodGlucoseRecord(
                                         bgValue.time(),
                                         bgValue.zoneOffset(),
@@ -132,9 +135,18 @@ class HealthConnectPlugin @Inject constructor(
                                         RELATION_TO_MEAL_UNKNOWN,
                                         Metadata())
         healthConnectClient.insertRecords(listOf(bgRecord))
-
-
     }
+
+    override fun requestPermissionIfNeeded() {
+        TODO("Not yet implemented")
+    }
+
+    override val hasWritePermission: Boolean
+        get() = TODO("Not yet implemented")
+    override val connected: Boolean
+        get() = TODO("Not yet implemented")
+    override val status: String
+        get() = TODO("Not yet implemented")
 
     companion object {
         // Create a set of permissions for required data types

@@ -66,6 +66,8 @@ abstract class SyncModule {
     @ContributesAndroidInjector abstract fun contributesXdripFragment(): XdripFragment
     @ContributesAndroidInjector abstract fun contributesXdripDataSyncWorker(): XdripDataSyncWorker
 
+    @ContributesAndroidInjector abstract fun contributesHealthConnectWorker(): app.aaps.plugins.sync.healthconnect.HealthConnectPlugin.HealthConnectWorker
+
     @Module
     open class Provide {
 

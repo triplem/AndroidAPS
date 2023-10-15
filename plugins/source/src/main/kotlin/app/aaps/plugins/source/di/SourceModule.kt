@@ -8,7 +8,6 @@ import app.aaps.plugins.source.BGSourceFragment
 import app.aaps.plugins.source.DexcomPlugin
 import app.aaps.plugins.source.EversensePlugin
 import app.aaps.plugins.source.GlimpPlugin
-import app.aaps.plugins.sync.healthconnect.HealthConnectPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
 import app.aaps.plugins.source.PoctechPlugin
@@ -40,9 +39,6 @@ abstract class SourceModule {
     @ContributesAndroidInjector abstract fun contributesAidexWorker(): AidexPlugin.AidexWorker
 
     @ContributesAndroidInjector abstract fun contributesRequestDexcomPermissionActivity(): RequestDexcomPermissionActivity
-
-    @ContributesAndroidInjector abstract fun contributesHealthConnectWorker(): app.aaps.plugins.sync.healthconnect.HealthConnectPlugin.HealthConnectWorker
-
 
     @Module
     interface Bindings {
