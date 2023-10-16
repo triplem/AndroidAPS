@@ -49,4 +49,9 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:$retrofit2_version"
 
     api "com.google.code.gson:gson:$gson_version"
+
+    // google health connect
+    implementation ("androidx.health.connect:connect-client:${health_connect_version}") {
+        exclude group: 'androidx.core', module: 'core'
+    }
 }
